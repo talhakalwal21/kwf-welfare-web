@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'KWF_PC_Pages_Website.zip'
+      - 'website-enhancements.js'
+      - 'website-enhancements.css'
       - '.github/workflows/deploy-kwf-pages.yml'
 
 permissions:
@@ -31,6 +33,9 @@ jobs:
           mkdir -p _site
           unzip -q KWF_PC_Pages_Website.zip -d _site
           test -f _site/index.html
+          cat website-enhancements.js >> _site/app.js
+          cat website-enhancements.css >> _site/style.css
+          node --check _site/app.js
           python3 - <<'PY'
           import json, os, pathlib
           data = {
