@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>PakPDF Pro — All-in-One 33 PDF Tools (International Standard & Native Urdu Engine)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter, Noto Sans Arabic, and Noto Nastaliq Urdu -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Core Client-Side PDF & Office Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Arabic', 'sans-serif'],
+            urdu: ['"Noto Nastaliq Urdu"', '"Jameel Noori Nastaleeq"', '"Noto Sans Arabic"', 'serif'],
+          },
+          colors: {
+            organize: '#f26c4f',
+            optimize: '#82c341',
+            convertTo: '#f5b041',
+            convertFrom: '#3b82f6',
+            editPdf: '#b36699',
+            security: '#4a7c9b',
+            intelligence: '#6c5ce7',
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+    
+    .font-urdu {
+      font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Noto Sans Arabic', serif;
+      line-height: 2.2 !important;
+    }
+    .urdu-input {
+      font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Noto Sans Arabic', 'Inter', sans-serif;
+      line-height: 2.2;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .tool-card {
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px -8px rgba(15, 23, 42, 0.12), 0 4px 10px -3px rgba(15, 23, 42, 0.06);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-600 selection:text-white min-h-screen flex flex-col pb-16 md:pb-0">
+
+  <!-- TOP NOTIFICATION BANNER -->
+  <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-xs sm:text-sm py-2 px-4">
+    <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+          <i class="fa-solid fa-check-circle mr-1"></i> Browser processing • 100% Crisp &amp; Clear
+        </span>
+        <span class="text-slate-200 hidden sm:inline" id="bannerTextEn">
+          PDF tools run in your browser. Some conversions simplify layouts; always check the output.
+        </span>
+        <span class="text-amber-200 font-urdu text-xs sm:text-sm" dir="rtl">
+          تمام فائلز ۳۰۰ ڈی پی آئی فل ایچ ڈی ریزولوشن اور انتہائی واضح کوالٹی میں کنورٹ ہوں گی
+        </span>
+      </div>
+      <div class="flex items-center gap-3 ml-auto">
+        <button onclick="openToolById('word-to-pdf')" class="text-xs bg-white/10 hover:bg-white/20 text-white px-2.5 py-1 rounded-md transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-pen-nib text-amber-400"></i>
+          <span>Urdu PDF Composer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <a href="#" onclick="closeWorkspace(); return false;" class="flex items-center gap-2.5 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#f26c4f] via-[#e11d48] to-[#6c5ce7] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition">
+            <i class="fa-solid fa-file-pdf text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900">Pak<span class="text-[#f26c4f]">PDF</span></span>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700">33 Tools Pro</span>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-none hidden sm:block">International Standard Suite • Native Urdu &amp; English Engine</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden xl:flex items-center gap-1">
+        <button onclick="openToolById('merge-pdf')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#f26c4f] hover:bg-orange-50/70 transition cursor-pointer">Merge PDF</button>
+        <button onclick="openToolById('split-pdf')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#f26c4f] hover:bg-orange-50/70 transition cursor-pointer">Split PDF</button>
+        <button onclick="openToolById('compress-pdf')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#82c341] hover:bg-lime-50/70 transition cursor-pointer">Compress PDF</button>
+        <button onclick="openToolById('pdf-to-word')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50/70 transition cursor-pointer">PDF to Word</button>
+        <button onclick="openToolById('word-to-pdf')" class="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-amber-600 hover:bg-amber-50/70 transition cursor-pointer">Word to PDF</button>
+        <button onclick="toggleMegaMenu()" class="px-3.5 py-2 rounded-xl text-sm font-bold bg-slate-900 text-white hover:bg-indigo-700 transition flex items-center gap-2 shadow-sm cursor-pointer ml-1">
+          <i class="fa-solid fa-grip text-amber-400"></i>
+          <span>All 33 Tools</span>
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+      </nav>
+
+      <!-- Search Input + Language Switcher + Mobile Menu Button -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="relative hidden md:block w-56 lg:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+          <input
+            id="topSearchInput"
+            type="text"
+            oninput="handleSearch(this.value)"
+            placeholder="Search 33 tools (e.g. Word, Split)..."
+            class="w-full pl-9 pr-8 py-1.5 text-sm bg-slate-100 hover:bg-slate-200/70 focus:bg-white rounded-xl border border-transparent focus:border-indigo-500 focus:outline-none transition"
+          />
+          <button id="clearTopSearchBtn" onclick="handleSearch('')" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <i class="fa-solid fa-xmark text-xs"></i>
+          </button>
+        </div>
+
+        <button
+          onclick="toggleLanguage()"
+          id="langToggleBtn"
+          class="px-3 py-1.5 rounded-xl border border-slate-300 hover:border-indigo-500 bg-white hover:bg-indigo-50/40 text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-2 transition cursor-pointer"
+          title="Switch Interface Language"
+        >
+          <i class="fa-solid fa-language text-indigo-600 text-base"></i>
+          <span id="langToggleLabel" class="font-urdu">اردو / EN</span>
+        </button>
+
+        <button onclick="toggleMegaMenu()" class="xl:hidden hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold cursor-pointer">
+          <i class="fa-solid fa-grip text-amber-400"></i>
+          <span>33 Tools</span>
+        </button>
+
+        <button
+          onclick="toggleMobileDrawer()"
+          class="xl:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
+          aria-label="Open Navigation Menu"
+        >
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 7-COLUMN MEGA MENU -->
+    <div id="megaMenuModal" class="hidden border-t border-slate-200 bg-white shadow-2xl max-h-[82vh] overflow-y-auto">
+      <div class="max-w-[1440px] mx-auto px-6 py-7">
+        <div class="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#f26c4f]"></span>
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-500">
+              Complete 7-Category Directory — Click Any Tool to Launch
+            </h3>
+          </div>
+          <button onclick="toggleMegaMenu(false)" class="text-xs font-semibold text-slate-500 hover:text-rose-600 flex items-center gap-1 cursor-pointer">
+            <span>Close Menu</span>
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+        <div id="megaMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-6"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE COLLAPSIBLE DRAWER -->
+  <div id="mobileDrawerBackdrop" onclick="toggleMobileDrawer(false)" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden"></div>
+  <aside id="mobileDrawer" class="fixed top-0 right-0 bottom-0 w-[88vw] max-w-sm bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-[#f26c4f] text-white flex items-center justify-center">
+          <i class="fa-solid fa-file-pdf"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-900 text-sm">All 33 PDF Tools</h4>
+          <p class="text-[11px] text-slate-500">Mobile Responsive Menu</p>
+        </div>
+      </div>
+      <button onclick="toggleMobileDrawer(false)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="p-3 border-b border-slate-100">
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+        <input
+          type="text"
+          oninput="handleSearch(this.value)"
+          placeholder="Search any PDF tool..."
+          class="w-full pl-8 pr-3 py-2 text-sm rounded-xl bg-slate-100 focus:bg-white border border-transparent focus:border-indigo-500 focus:outline-none"
+        />
+      </div>
+    </div>
+    <div id="mobileDrawerCategories" class="flex-1 overflow-y-auto p-3 space-y-3"></div>
+    <div class="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+      <span><i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> 100% Client-Side Privacy</span>
+      <span class="font-urdu text-slate-700">اردو اور انگلش سپورٹ فعال ہے</span>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1">
+    <!-- HOME DIRECTORY VIEW -->
+    <div id="homeView">
+      <!-- HERO SECTION -->
+      <section class="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-slate-100/70 pt-6 pb-8 sm:pt-10 sm:pb-12 border-b border-slate-200/80">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-semibold mb-4">
+            <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
+            <span id="heroBadgeText">33 PDF Utilities • Transparent Capabilities • Browser-Based Files</span>
+          </div>
+          <h1 id="heroTitle" class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight">
+            PakPDF: Free Browser-Based PDF Tools
+          </h1>
+          <p id="heroSubtitleUr" class="font-urdu text-base sm:text-xl text-indigo-950/90 mt-3 max-w-3xl mx-auto px-2" dir="rtl">
+            پی ڈی ایف کو یکجا کریں، تقسیم کریں، ورڈ اور ایکسل میں بدلیں — بغیر فونٹ خراب ہوئے اور 100 فیصد فوری ڈاؤن لوڈ کے ساتھ!
+          </p>
+          <p id="heroSubtitleEn" class="text-xs sm:text-base text-slate-600 mt-2 max-w-2xl mx-auto">
+            Files stay on your device during processing. Some operations simplify formatting; conversion quality varies by document.
+          </p>
+
+          <div class="mt-6 max-w-xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 px-2">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input
+                id="heroSearchInput"
+                type="text"
+                oninput="handleSearch(this.value)"
+                placeholder="Find a tool: Merge, Word, Split, Compress, Sign, Watermark..."
+                class="w-full pl-11 pr-10 py-3 sm:py-3.5 rounded-2xl bg-white border border-slate-300 shadow-sm focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/10 focus:outline-none text-sm sm:text-base"
+              />
+              <button onclick="handleSearch('')" id="heroClearBtn" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700">
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </div>
+            <button
+              onclick="toggleReferenceBoard()"
+              class="px-4 py-3 sm:py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition cursor-pointer shrink-0"
+            >
+              <i class="fa-solid fa-table-columns text-amber-400"></i>
+              <span id="toggleBoardBtnText">7-Category View</span>
+            </button>
+          </div>
+
+          <div class="mt-6 flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar py-1 px-2" id="categoryFilterPills"></div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE 7-COLUMN BOARD -->
+      <section id="referenceBoardSection" class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+        <div class="bg-white rounded-3xl border border-slate-200/90 shadow-md p-5 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <div>
+                <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                  <span>PakPDF — Tool Directory</span>
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Check tool limitations</span>
+                </h2>
+                <p class="text-xs text-slate-500">Click any tool to launch converter, processor, or viewer</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <span class="text-xs font-urdu text-indigo-700 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100" dir="rtl">
+                کسی بھی ٹول پر کلک کر کے فائل اپ لوڈ کریں
+              </span>
+            </div>
+          </div>
+          <div id="sevenColumnBoard" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-x-6 gap-y-8"></div>
+        </div>
+      </section>
+
+      <!-- DETAILED RESPONSIVE CARDS GRID -->
+      <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <div>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900" id="activeCategoryHeading">All PDF Tools (33)</h2>
+            <p class="text-xs sm:text-sm text-slate-500" id="activeCategoryCount">Browse 33 tools in 7 categories. Some features require additional software.</p>
+          </div>
+          <button onclick="generateSampleUrduPDF()" class="text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Download Sample Urdu &amp; English PDF</span>
+          </button>
+        </div>
+        <div id="toolsCardGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5"></div>
+      </section>
+    </div>
+
+    <!-- DEDICATED INTERACTIVE WORKSPACE VIEW -->
+    <section id="workspaceView" class="hidden max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <button
+          onclick="closeWorkspace()"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 font-semibold text-sm shadow-2xs transition cursor-pointer"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to All 33 Tools</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <span id="wsCategoryBadge" class="text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-orange-100 text-orange-800">ORGANIZE PDF</span>
+          <span class="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <i class="fa-solid fa-circle-check text-emerald-600"></i> Browser-based tools
+          </span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+        <!-- Tool Header Banner -->
+        <div class="p-5 sm:p-7 border-b border-slate-200 bg-gradient-to-r from-slate-50 via-white to-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-start sm:items-center gap-4">
+            <div id="wsToolIconBox" class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+              <i class="fa-solid fa-object-group"></i>
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2.5">
+                <h2 id="wsToolTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900">Merge PDF</h2>
+                <span id="wsToolTitleUr" class="font-urdu text-sm sm:text-base text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-lg" dir="rtl">پی ڈی ایف یکجا کریں</span>
+              </div>
+              <p id="wsToolDesc" class="text-xs sm:text-sm text-slate-600 mt-1">Combine multiple PDF files into one unified document in seconds.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 self-start sm:self-center">
+            <button
+              onclick="loadDemoFileForCurrentTool()"
+              class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+            >
+              <i class="fa-solid fa-bolt text-amber-500"></i>
+              <span>Load Demo File</span>
+            </button>
+            <button
+              onclick="resetWorkspaceFiles()"
+              class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-semibold transition cursor-pointer"
+            >
+              <i class="fa-solid fa-rotate-right"></i> Reset
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+          <!-- LEFT / MAIN PANEL -->
+          <div class="lg:col-span-8 p-5 sm:p-7 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
+            <div
+              id="dropZone"
+              onclick="triggerFileInput()"
+              ondragover="handleDragOver(event)"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleFileDrop(event)"
+              class="border-2 border-dashed border-slate-300 hover:border-indigo-500 bg-slate-50/70 hover:bg-indigo-50/30 rounded-2xl p-6 sm:p-8 text-center transition cursor-pointer group"
+            >
+              <input id="wsFileInput" type="file" class="hidden" multiple onchange="handleFileSelect(event)" />
+              <div class="w-14 h-14 rounded-2xl bg-indigo-600/10 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white flex items-center justify-center mx-auto text-2xl transition mb-3">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-800" id="dropZoneTitle">Select or Drag &amp; Drop Files Here</h3>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1" id="dropZoneFormats">Supports .pdf, .docx, .txt, .xlsx, .csv, .jpg, .png, .html</p>
+              <p class="font-urdu text-xs sm:text-sm text-indigo-700 mt-2" dir="rtl">فائل منتخب کرنے کے لیے یہاں کلک کریں یا ڈریگ کریں</p>
+            </div>
+
+            <!-- Live Camera Scanner for Scan-to-PDF -->
+            <div id="cameraZone" class="hidden mt-4 bg-slate-900 rounded-2xl p-4 text-white">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-camera"></i> Live Document Scanner (Full HD / 4K)
+                </span>
+                <div class="flex gap-2">
+                  <button onclick="startCameraScan()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-bold cursor-pointer">Start Camera</button>
+                  <button onclick="captureCameraFrame()" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-bold cursor-pointer">
+                    <i class="fa-solid fa-camera-retro mr-1"></i> Capture Page
+                  </button>
+                  <button onclick="stopCameraScan()" class="px-2.5 py-1 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-xs cursor-pointer">Stop</button>
+                </div>
+              </div>
+              <video id="scannerVideo" autoplay playsinline class="w-full max-h-64 object-contain rounded-xl bg-black hidden"></video>
+            </div>
+
+            <!-- Uploaded Files & Page Thumbnails -->
+            <div id="uploadedFilesSection" class="mt-6 flex-1 flex flex-col">
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+                  <i class="fa-solid fa-layer-group text-indigo-500"></i>
+                  <span id="previewSectionHeader">Loaded Files &amp; Preview</span>
+                </h4>
+                <span id="fileCountBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">0 files</span>
+              </div>
+              <div id="fileListContainer" class="space-y-2 mb-4"></div>
+              <div
+                id="pageThumbnailsGrid"
+                class="flex-1 bg-slate-100/80 border border-slate-200/80 rounded-2xl p-4 min-h-[220px] max-h-[520px] overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 items-start content-start"
+              >
+                <div class="col-span-full py-12 text-center text-slate-400 text-sm">
+                  <i class="fa-regular fa-file-pdf text-3xl mb-2 block opacity-60"></i>
+                  Upload a file or click <strong>"Load Demo File"</strong> above to preview pages and apply options.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT PANEL: SETTINGS & PROCESS -->
+          <div class="lg:col-span-4 p-5 sm:p-7 bg-slate-50/60 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200">
+                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-sliders text-indigo-600"></i>
+                  <span>Tool Settings &amp; Options</span>
+                </h3>
+                <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  <i class="fa-solid fa-gem mr-1 text-emerald-600"></i>Browser processing
+                </span>
+              </div>
+              <div id="toolDynamicControls" class="space-y-4"></div>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-slate-200 space-y-3">
+              <div id="processProgressBox" class="hidden bg-white p-3.5 rounded-2xl border border-slate-200">
+                <div class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                  <span id="processStatusText">Processing document...</span>
+                  <span id="processPercentText">0%</span>
+                </div>
+                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div id="processProgressBar" class="h-full bg-gradient-to-r from-indigo-600 to-emerald-500 w-0 transition-all duration-300"></div>
+                </div>
+              </div>
+
+              <!-- Output Result Box -->
+              <div id="outputResultBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-3">
+                <div class="flex items-start gap-2.5">
+                  <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="text-sm font-bold text-emerald-950" id="outputResultTitle">Success! Ready to Download</h4>
+                    <p class="text-xs text-emerald-800 break-words" id="outputResultMeta">Your processed file has been generated in Ultra HD quality.</p>
+                  </div>
+                </div>
+
+                <div id="outputTextPreviewWrapper" class="hidden">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-[11px] font-bold uppercase text-emerald-800">Extracted Urdu &amp; English Text</span>
+                    <button onclick="copyOutputText()" class="text-[11px] font-semibold text-indigo-700 hover:underline cursor-pointer">
+                      <i class="fa-regular fa-copy mr-1"></i>Copy Text
+                    </button>
+                  </div>
+                  <textarea id="outputTextPreview" rows="6" class="w-full p-2.5 rounded-xl bg-white border border-emerald-200 text-xs sm:text-sm urdu-input text-slate-800 focus:outline-none"></textarea>
+                </div>
+
+                <!-- Direct Download Button -->
+                <button
+                  type="button"
+                  id="downloadResultBtn"
+                  onclick="downloadCurrentResult()"
+                  class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition cursor-pointer"
+                >
+                  <i class="fa-solid fa-download"></i>
+                  <span id="downloadResultBtnText">Download Processed File</span>
+                </button>
+              </div>
+
+              <button
+                id="executeToolBtn"
+                onclick="executeActiveTool()"
+                class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#f26c4f] to-[#e11d48] hover:from-[#e0583b] hover:to-[#be123c] text-white font-extrabold text-base shadow-lg shadow-rose-500/20 flex items-center justify-center gap-2.5 transition cursor-pointer"
+              >
+                <span id="executeToolBtnLabel">Convert &amp; Download in Ultra HD</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MOBILE FIXED BOTTOM BAR -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 flex items-center justify-around shadow-lg">
+    <button onclick="closeWorkspace(); filterCategory('ALL')" class="flex flex-col items-center py-1 px-2 text-slate-700 hover:text-indigo-600">
+      <i class="fa-solid fa-table-cells-large text-base"></i>
+      <span class="text-[10px] font-semibold mt-0.5">All 33</span>
+    </button>
+    <button onclick="openToolById('merge-pdf')" class="flex flex-col items-center py-1 px-2 text-slate-700 hover:text-[#f26c4f]">
+      <i class="fa-solid fa-object-group text-base text-[#f26c4f]"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Merge</span>
+    </button>
+    <button onclick="openToolById('word-to-pdf')" class="flex flex-col items-center py-1 px-2 text-slate-700 hover:text-indigo-600">
+      <i class="fa-solid fa-file-word text-base text-indigo-600"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Word/Urdu</span>
+    </button>
+    <button onclick="openToolById('compress-pdf')" class="flex flex-col items-center py-1 px-2 text-slate-700 hover:text-[#82c341]">
+      <i class="fa-solid fa-compress text-base text-[#82c341]"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Compress</span>
+    </button>
+    <button onclick="toggleMobileDrawer(true)" class="flex flex-col items-center py-1 px-2 text-slate-700 hover:text-indigo-600">
+      <i class="fa-solid fa-bars text-base"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Categories</span>
+    </button>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 mt-12">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-[#f26c4f] text-white flex items-center justify-center font-bold">
+          <i class="fa-solid fa-file-pdf"></i>
+        </div>
+        <div>
+          <span class="text-white font-bold text-base">PakPDF Studio Pro</span>
+          <p class="text-xs text-slate-400">Complete 7-Category, 33-Tool Web Suite with Native Font Preservation</p>
+        </div>
+      </div>
+      <div class="text-xs text-center sm:text-right">
+        <p class="font-urdu text-amber-300 text-sm mb-1" dir="rtl">ٹول استعمال کرنے کے بعد نتیجہ ضرور چیک کریں</p>
+        <p>PDF files are processed in your browser • Internet required for third-party libraries</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-16 md:bottom-6 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-2"></div>
+
+  <!-- Offscreen Canvas for Rendering Text & Urdu Pages -->
+  <canvas id="urduOffscreenCanvas" class="hidden"></canvas>
+
+  <script>
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    const CATEGORIES_DATA = [
+      {
+        id: 'ORGANIZE PDF',
+        titleEn: 'ORGANIZE PDF',
+        titleUr: 'پی ڈی ایف ترتیب دیں',
+        color: '#f26c4f',
+        badgeClass: 'bg-orange-100 text-orange-800 border-orange-200',
+        tools: [
+          { id: 'merge-pdf', name: 'Merge PDF', nameUr: 'پی ڈی ایف یکجا کریں', icon: 'fa-object-group', color: '#f26c4f', accept: '.pdf', multiple: true, desc: 'Combine multiple PDF files into one unified document in your desired order.' },
+          { id: 'split-pdf', name: 'Split PDF', nameUr: 'پی ڈی ایف تقسیم کریں', icon: 'fa-scissors', color: '#f26c4f', accept: '.pdf', multiple: false, desc: 'Split a PDF by page ranges or extract all pages into separate PDF files.' },
+          { id: 'remove-pages', name: 'Remove pages', nameUr: 'صفحات حذف کریں', icon: 'fa-file-circle-xmark', color: '#f26c4f', accept: '.pdf', multiple: false, desc: 'Remove specific pages from your PDF document cleanly.' },
+          { id: 'extract-pages', name: 'Extract pages', nameUr: 'مخصوص صفحات نکالیں', icon: 'fa-file-export', color: '#f26c4f', accept: '.pdf', multiple: false, desc: 'Extract selected pages from your PDF document and save them as a new PDF.' },
+          { id: 'organize-pdf', name: 'Organize PDF', nameUr: 'صفحات منظم کریں', icon: 'fa-arrow-down-a-z', color: '#f26c4f', accept: '.pdf', multiple: false, desc: 'Reorder pages, rotate individual pages, or delete pages visually.' },
+          { id: 'scan-to-pdf', name: 'Scan to PDF', nameUr: 'اسکین سے پی ڈی ایف', icon: 'fa-camera', color: '#f26c4f', accept: 'image/*', multiple: true, desc: 'Capture documents with your camera or convert scanned images into a clean PDF.' }
+        ]
+      },
+      {
+        id: 'OPTIMIZE PDF',
+        titleEn: 'OPTIMIZE PDF',
+        titleUr: 'پی ڈی ایف بہتر بنائیں',
+        color: '#82c341',
+        badgeClass: 'bg-lime-100 text-lime-800 border-lime-200',
+        tools: [
+          { id: 'compress-pdf', name: 'Compress PDF', nameUr: 'پی ڈی ایف سائز کم کریں', icon: 'fa-compress', color: '#82c341', accept: '.pdf', multiple: false, desc: 'Reduce PDF file size while maintaining crisp visual quality for Urdu & English text.' },
+          { id: 'repair-pdf', name: 'Repair PDF', nameUr: 'خراب پی ڈی ایف مرمت کریں', icon: 'fa-screwdriver-wrench', color: '#82c341', accept: '.pdf', multiple: false, desc: 'Rebuild corrupted cross-reference streams and re-serialize PDF pages cleanly.' },
+          { id: 'ocr-pdf', name: 'OCR / Extract Text', nameUr: 'تصویری تحریر شناخت کریں (OCR)', icon: 'fa-eye', color: '#82c341', accept: '.pdf,image/*', multiple: false, desc: 'Extract selectable Urdu & English text from scanned PDF pages and documents.' }
+        ]
+      },
+      {
+        id: 'CONVERT TO PDF',
+        titleEn: 'CONVERT TO PDF',
+        titleUr: 'پی ڈی ایف میں تبدیل کریں',
+        color: '#f5b041',
+        badgeClass: 'bg-amber-100 text-amber-800 border-amber-200',
+        tools: [
+          { id: 'jpg-to-pdf', name: 'JPG to PDF', nameUr: 'تصاویر سے پی ڈی ایف', icon: 'fa-file-image', color: '#f4c430', accept: 'image/*', multiple: true, desc: 'Convert JPG, PNG, and WebP images into a high-quality PDF document.' },
+          { id: 'word-to-pdf', name: 'WORD to PDF', nameUr: 'ورڈ اور اردو تحریر سے پی ڈی ایف', icon: 'fa-file-word', color: '#3b82f6', accept: '.docx,.doc,.txt', multiple: false, desc: 'Convert Word (.docx/.txt) or rich Urdu Nastaliq text to PDF without breaking fonts or letters.' },
+          { id: 'powerpoint-to-pdf', name: 'POWERPOINT to PDF', nameUr: 'پاورپوائنٹ سے پی ڈی ایف', icon: 'fa-file-powerpoint', color: '#e67e22', accept: '.pptx,.ppt,.txt', multiple: false, desc: 'Create widescreen presentation slide PDFs with full Urdu & English slide formatting.' },
+          { id: 'excel-to-pdf', name: 'EXCEL to PDF', nameUr: 'ایکسل شیٹ سے پی ڈی ایف', icon: 'fa-file-excel', color: '#27ae60', accept: '.xlsx,.xls,.csv', multiple: false, desc: 'Convert Excel spreadsheets & CSV tables into formatted PDF tables with UTF-8 Urdu support.' },
+          { id: 'html-to-pdf', name: 'HTML to PDF', nameUr: 'ایچ ٹی ایم ایل سے پی ڈی ایف', icon: 'fa-code', color: '#f5b041', accept: '.html,.htm,.txt', multiple: false, desc: 'Render HTML code or web templates directly into high-resolution PDF pages.' }
+        ]
+      },
+      {
+        id: 'CONVERT FROM PDF',
+        titleEn: 'CONVERT FROM PDF',
+        titleUr: 'پی ڈی ایف سے دیگر فارمیٹس',
+        color: '#3b82f6',
+        badgeClass: 'bg-blue-100 text-blue-800 border-blue-200',
+        tools: [
+          { id: 'pdf-to-jpg', name: 'PDF to JPG', nameUr: 'پی ڈی ایف سے تصاویر (JPG)', icon: 'fa-images', color: '#f4c430', accept: '.pdf', multiple: false, desc: 'Render every PDF page into high-resolution JPG images or download as a ZIP archive.' },
+          { id: 'pdf-to-word', name: 'PDF to WORD', nameUr: 'پی ڈی ایف سے ایم ایس ورڈ', icon: 'fa-file-word', color: '#3b82f6', accept: '.pdf', multiple: false, desc: 'Extract text into an editable Word document with true Urdu Nastaliq & RTL formatting.' },
+          { id: 'pdf-to-powerpoint', name: 'PDF to POWERPOINT', nameUr: 'پی ڈی ایف سے پاورپوائنٹ', icon: 'fa-file-powerpoint', color: '#e67e22', accept: '.pdf', multiple: false, desc: 'Export PDF pages into a ready-to-present slide deck.' },
+          { id: 'pdf-to-excel', name: 'PDF to EXCEL', nameUr: 'پی ڈی ایف سے ایکسل (XLSX)', icon: 'fa-file-excel', color: '#27ae60', accept: '.pdf', multiple: false, desc: 'Extract structured tables from PDF into a real Excel (.xlsx) workbook.' },
+          { id: 'pdf-to-pdfa', name: 'PDF to PDF/A', nameUr: 'آرکائیو پی ڈی ایف (PDF/A)', icon: 'fa-file-shield', color: '#2980b9', accept: '.pdf', multiple: false, desc: 'Standardize fonts and metadata streams for long-term ISO PDF/A preservation.' }
+        ]
+      },
+      {
+        id: 'EDIT PDF',
+        titleEn: 'EDIT PDF',
+        titleUr: 'پی ڈی ایف ایڈٹ کریں',
+        color: '#b36699',
+        badgeClass: 'bg-purple-100 text-purple-800 border-purple-200',
+        tools: [
+          { id: 'rotate-pdf', name: 'Rotate PDF', nameUr: 'پی ڈی ایف صفحات گھمائیں', icon: 'fa-rotate-right', color: '#b36699', accept: '.pdf', multiple: false, desc: 'Rotate all pages or selected pages by 90°, 180°, or 270° clockwise.' },
+          { id: 'add-page-numbers', name: 'Add page numbers', nameUr: 'صفحہ نمبر لگائیں (Urdu / English)', icon: 'fa-list-ol', color: '#b36699', accept: '.pdf', multiple: false, desc: 'Insert customizable page numbers in English (Page 1) or Urdu (صفحہ ۱).' },
+          { id: 'add-watermark', name: 'Add watermark', nameUr: 'اردو یا انگلش واٹر مارک لگائیں', icon: 'fa-stamp', color: '#b36699', accept: '.pdf', multiple: false, desc: 'Stamp custom Urdu Nastaliq or English text watermarks with custom opacity and angle.' },
+          { id: 'crop-pdf', name: 'Crop PDF', nameUr: 'پی ڈی ایف حاشیہ کاٹیں (Crop)', icon: 'fa-crop-simple', color: '#b36699', accept: '.pdf', multiple: false, desc: 'Trim page margins cleanly across all pages of your PDF document.' },
+          { id: 'edit-pdf', name: 'Edit PDF', nameUr: 'پی ڈی ایف میں اردو/انگلش لکھیں', icon: 'fa-pen-to-square', color: '#b36699', accept: '.pdf', multiple: false, desc: 'Add Urdu Nastaliq or English annotations, notes, and text onto PDF pages.' },
+          { id: 'pdf-forms', name: 'PDF Forms', nameUr: 'پی ڈی ایف فارم پُر کریں', icon: 'fa-rectangle-list', color: '#b36699', accept: '.pdf', multiple: false, desc: 'Inspect, fill, and flatten interactive form fields in your PDF.' }
+        ]
+      },
+      {
+        id: 'PDF SECURITY',
+        titleEn: 'PDF SECURITY',
+        titleUr: 'پی ڈی ایف سیکیورٹی',
+        color: '#4a7c9b',
+        badgeClass: 'bg-sky-100 text-sky-800 border-sky-200',
+        tools: [
+          { id: 'unlock-pdf', name: 'Unlock PDF', nameUr: 'پی ڈی ایف ان لاک کریں', icon: 'fa-unlock-keyhole', color: '#4a7c9b', accept: '.pdf', multiple: false, desc: 'Remove restrictions and re-save a clean unlocked PDF.' },
+          { id: 'protect-pdf', name: 'Protect PDF', nameUr: 'پاس ورڈ اور سیکیورٹی لگائیں', icon: 'fa-shield-halved', color: '#4a7c9b', accept: '.pdf', multiple: false, desc: 'Add security metadata and lock document with password protection notice.' },
+          { id: 'sign-pdf', name: 'Sign PDF', nameUr: 'پی ڈی ایف پر دستخط کریں', icon: 'fa-signature', color: '#4a7c9b', accept: '.pdf', multiple: false, desc: 'Draw a digital signature or type an Urdu/English signature to stamp onto PDF.' },
+          { id: 'redact-pdf', name: 'Redact PDF', nameUr: 'حساس معلومات چھپائیں (Redact)', icon: 'fa-eraser', color: '#4a7c9b', accept: '.pdf', multiple: false, desc: 'Permanently black out confidential regions or text on PDF pages.' },
+          { id: 'compare-pdf', name: 'Compare PDF', nameUr: 'دو پی ڈی ایف فائلوں کا موازنہ', icon: 'fa-code-compare', color: '#4a7c9b', accept: '.pdf', multiple: true, desc: 'Upload two PDF files to compare page counts and text differences.' }
+        ]
+      },
+      {
+        id: 'PDF INTELLIGENCE',
+        titleEn: 'PDF INTELLIGENCE',
+        titleUr: 'اے آئی پی ڈی ایف ٹولز (AI)',
+        color: '#6c5ce7',
+        badgeClass: 'bg-violet-100 text-violet-800 border-violet-200',
+        tools: [
+          { id: 'ai-summarizer', name: 'AI Summarizer', nameUr: 'اے آئی خلاصہ نگار', icon: 'fa-wand-magic-sparkles', color: '#6c5ce7', accept: '.pdf,.txt', multiple: false, desc: 'Generate an executive summary & key bullet points in Urdu and English from your PDF.' },
+          { id: 'translate-pdf', name: 'Translate PDF', nameUr: 'پی ڈی ایف ترجمہ کریں (اردو ⇄ انگلش)', icon: 'fa-language', color: '#6c5ce7', accept: '.pdf,.txt', multiple: false, desc: 'Translate PDF text into Urdu or English and download a cleanly formatted document.' },
+          { id: 'pdf-to-markdown', name: 'PDF to Markdown', nameUr: 'پی ڈی ایف سے مارک ڈاؤن (.MD)', icon: 'fa-hashtag', color: '#6c5ce7', accept: '.pdf', multiple: false, desc: 'Convert PDF headings, paragraphs, and Urdu/English text into structured Markdown (.md).' }
+        ]
+      }
+    ];
+
+    const ALL_TOOLS = CATEGORIES_DATA.flatMap(cat =>
+      cat.tools.map(t => ({ ...t, categoryId: cat.id, categoryUr: cat.titleUr, categoryColor: cat.color, badgeClass: cat.badgeClass }))
+    );
+
+    let currentLang = 'en';
+    let selectedCategoryFilter = 'ALL';
+    let searchQuery = '';
+    let activeTool = null;
+    let uploadedFiles = [];
+    let pageMetaList = [];
+    let mediaStream = null;
+
+    // Global result storage for reliable downloads
+    let currentResultBlob = null;
+    let currentResultFilename = 'output.pdf';
+
+    // Helper: download Blob reliably on any browser / OS
+    function downloadBlob(blob, filename) {
+      if (!blob) {
+        showToast('No file available for download', 'error');
+        return;
+      }
+      try {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 4000);
+        showToast(`Download started: ${filename}`, 'success');
+      } catch (err) {
+        console.error('Download error:', err);
+        showToast('Download error: ' + err.message, 'error');
+      }
+    }
+
+    function downloadCurrentResult() {
+      if (!currentResultBlob) {
+        showToast('Please process the file first.', 'error');
+        return;
+      }
+      downloadBlob(currentResultBlob, currentResultFilename);
+    }
+
+    // Ultra-High-Definition (300 DPI) Canvas Renderer for Crystal Clear Text & Graphics
+    async function renderUrduTextToPngBytes(text, options = {}) {
+      const {
+        width = 2400, // 300 DPI standard A4 width
+        fontSize = 66, // Scaled for high resolution
+        color = '#0f172a',
+        backgroundColor = null,
+        align = 'right',
+        direction = 'rtl',
+        padding = 80,
+        lineHeightMultiplier = 2.25
+      } = options;
+
+      // Ensure web fonts are completely loaded before drawing
+      if (document.fonts) {
+        await document.fonts.ready;
+      }
+
+      const canvas = document.getElementById('urduOffscreenCanvas');
+      const ctx = canvas.getContext('2d');
+      const fontStr = `600 ${fontSize}px "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Noto Sans Arabic", "Inter", sans-serif`;
+      ctx.font = fontStr;
+
+      const maxLineWidth = width - padding * 2;
+      const rawParagraphs = String(text || '').split(/\r?\n/);
+      const lines = [];
+
+      for (const para of rawParagraphs) {
+        if (!para.trim()) {
+          lines.push('');
+          continue;
+        }
+        const words = para.split(' ');
+        let currentLine = words[0] || '';
+        for (let i = 1; i < words.length; i++) {
+          const testLine = currentLine + ' ' + words[i];
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > maxLineWidth && currentLine.length > 0) {
+            lines.push(currentLine);
+            currentLine = words[i];
+          } else {
+            currentLine = testLine;
+          }
+        }
+        lines.push(currentLine);
+      }
+
+      const lineHeight = Math.round(fontSize * lineHeightMultiplier);
+      const totalHeight = Math.max(220, lines.length * lineHeight + padding * 2);
+
+      canvas.width = width;
+      canvas.height = totalHeight;
+
+      const ctx2 = canvas.getContext('2d');
+      if (backgroundColor) {
+        ctx2.fillStyle = backgroundColor;
+        ctx2.fillRect(0, 0, width, totalHeight);
+      } else {
+        ctx2.clearRect(0, 0, width, totalHeight);
+      }
+
+      ctx2.imageSmoothingEnabled = true;
+      ctx2.imageSmoothingQuality = 'high';
+      ctx2.font = fontStr;
+      ctx2.fillStyle = color;
+      ctx2.textBaseline = 'top';
+      ctx2.direction = direction;
+      ctx2.textAlign = align;
+
+      const xPos = align === 'right' ? width - padding : align === 'center' ? width / 2 : padding;
+      lines.forEach((line, idx) => {
+        ctx2.fillText(line, xPos, padding + idx * lineHeight);
+      });
+
+      const dataUrl = canvas.toDataURL('image/png');
+      const base64 = dataUrl.split(',');
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return { bytes, width, height: totalHeight, dataUrl };
+    }
+
+    // Multi-page Text to PDF helper in Ultra-HD 300 DPI
+    async function convertTextToPdfDocument(fullText, title = 'Document') {
+      if (document.fonts) {
+        await document.fonts.ready;
+      }
+      const pdfDoc = await PDFLib.PDFDocument.create();
+      const pageWidth = 595.28;
+      const pageHeight = 841.89;
+      const margin = 40;
+      const usableWidth = pageWidth - margin * 2;
+      const usableHeight = pageHeight - margin * 2;
+
+      const paragraphs = String(fullText || '').split(/\r?\n/);
+      let pageChunks = [];
+      let currentChunk = [];
+      let currentLineCount = 0;
+      const linesPerPage = 18;
+
+      for (const p of paragraphs) {
+        const estLines = Math.max(1, Math.ceil(p.length / 50));
+        if (currentLineCount + estLines > linesPerPage && currentChunk.length > 0) {
+          pageChunks.push(currentChunk.join('\n'));
+          currentChunk = [p];
+          currentLineCount = estLines;
+        } else {
+          currentChunk.push(p);
+          currentLineCount += estLines;
+        }
+      }
+      if (currentChunk.length > 0) {
+        pageChunks.push(currentChunk.join('\n'));
+      }
+      if (pageChunks.length === 0) pageChunks = ['خالی دستاویز'];
+
+      for (let i = 0; i < pageChunks.length; i++) {
+        const page = pdfDoc.addPage([pageWidth, pageHeight]);
+        const rendered = await renderUrduTextToPngBytes(pageChunks[i], {
+          width: 2400,
+          fontSize: 62,
+          padding: 70
+        });
+        const pngImg = await pdfDoc.embedPng(rendered.bytes);
+        const dims = pngImg.scaleToFit(usableWidth, usableHeight);
+        page.drawImage(pngImg, {
+          x: margin + (usableWidth - dims.width) / 2,
+          y: pageHeight - margin - dims.height,
+          width: dims.width,
+          height: dims.height
+        });
+      }
+      return await pdfDoc.save();
+    }
+
+    // Helper: Extract real text from PDF using PDF.js
+    async function extractTextFromPdfFile(file) {
+      if (!window.pdfjsLib) return '';
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let fullText = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const strings = content.items.map(item => item.str);
+        fullText += `--- Page ${i} ---\n` + strings.join(' ') + '\n\n';
+      }
+      return fullText;
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      const bgClass = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-slate-900';
+      toast.className = `${bgClass} text-white px-4 py-3 rounded-2xl shadow-xl text-xs sm:text-sm font-semibold flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300`;
+      toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="opacity-80 hover:opacity-100 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        if (toast.parentElement) toast.remove();
+      }, 4000);
+    }
+
+    function renderNavigationAndBoards() {
+      const megaGrid = document.getElementById('megaMenuGrid');
+      const sevenBoard = document.getElementById('sevenColumnBoard');
+      const mobileDrawerCats = document.getElementById('mobileDrawerCategories');
+
+      const columnsHtml = CATEGORIES_DATA.map(cat => `
+        <div>
+          <div class="flex items-center gap-2 mb-3 pb-1.5 border-b border-slate-100">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:${cat.color}"></span>
+            <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">${currentLang === 'ur' ? cat.titleUr : cat.titleEn}</h4>
+          </div>
+          <ul class="space-y-1.5">
+            ${cat.tools.map(t => `
+              <li>
+                <button onclick="openToolById('${t.id}')" class="w-full text-left px-2 py-1.5 rounded-xl hover:bg-slate-100 transition flex items-center gap-2.5 group cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs shrink-0 shadow-2xs group-hover:scale-110 transition" style="background:${t.color}">
+                    <i class="fa-solid ${t.icon}"></i>
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <div class="text-xs font-bold text-slate-800 group-hover:text-indigo-600 truncate">${t.name}</div>
+                    <div class="text-[10px] font-urdu text-slate-500 truncate" dir="rtl">${t.nameUr}</div>
+                  </div>
+                </button>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('');
+
+      if (megaGrid) megaGrid.innerHTML = columnsHtml;
+      if (sevenBoard) sevenBoard.innerHTML = columnsHtml;
+
+      if (mobileDrawerCats) {
+        mobileDrawerCats.innerHTML = CATEGORIES_DATA.map(cat => `
+          <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200/70">
+            <div class="text-xs font-extrabold uppercase tracking-wider mb-2 flex items-center justify-between" style="color:${cat.color}">
+              <span>${cat.titleEn}</span>
+              <span class="font-urdu text-[11px]" dir="rtl">${cat.titleUr}</span>
+            </div>
+            <div class="grid grid-cols-1 gap-1">
+              ${cat.tools.map(t => `
+                <button onclick="openToolById('${t.id}'); toggleMobileDrawer(false);" class="w-full text-left px-2.5 py-2 rounded-xl bg-white hover:bg-indigo-50 border border-slate-100 flex items-center justify-between gap-2">
+                  <span class="flex items-center gap-2 text-xs font-bold text-slate-800">
+                    <i class="fa-solid ${t.icon}" style="color:${t.color}"></i> ${t.name}
+                  </span>
+                  <span class="font-urdu text-[11px] text-slate-500" dir="rtl">${t.nameUr}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const pillsContainer = document.getElementById('categoryFilterPills');
+      if (pillsContainer) {
+        const allCategories = [{ id: 'ALL', titleEn: 'All 33 Tools', titleUr: 'تمام ۳۳ ٹولز', color: '#4f46e5' }, ...CATEGORIES_DATA];
+        pillsContainer.innerHTML = allCategories.map(c => {
+          const isActive = selectedCategoryFilter === c.id;
+          return `
+            <button
+              onclick="filterCategory('${c.id}')"
+              class="px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 ${isActive ? 'bg-slate-900 text-white shadow-sm' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'}"
+            >
+              <span class="w-2 h-2 rounded-full" style="background:${c.color}"></span>
+              <span>${currentLang === 'ur' ? c.titleUr : c.titleEn}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      renderToolsCardGrid();
+    }
+
+    function renderToolsCardGrid() {
+      const grid = document.getElementById('toolsCardGrid');
+      if (!grid) return;
+
+      const q = searchQuery.trim().toLowerCase();
+      const filtered = ALL_TOOLS.filter(tool => {
+        const matchesCat = selectedCategoryFilter === 'ALL' || tool.categoryId === selectedCategoryFilter;
+        const matchesQuery = !q ||
+          tool.name.toLowerCase().includes(q) ||
+          tool.nameUr.includes(q) ||
+          tool.desc.toLowerCase().includes(q) ||
+          tool.categoryId.toLowerCase().includes(q);
+        return matchesCat && matchesQuery;
+      });
+
+      document.getElementById('activeCategoryHeading').textContent =
+        selectedCategoryFilter === 'ALL' ? `All PDF Tools (${filtered.length})` : `${selectedCategoryFilter} (${filtered.length})`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl p-10 text-center border border-slate-200">
+            <i class="fa-solid fa-magnifying-glass text-3xl text-slate-300 mb-2"></i>
+            <p class="font-bold text-slate-700">No matching tool found for "${searchQuery}"</p>
+            <button onclick="handleSearch(''); filterCategory('ALL');" class="mt-3 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold">Reset Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(t => `
+        <div
+          onclick="openToolById('${t.id}')"
+          class="tool-card bg-white rounded-2xl p-5 border border-slate-200/90 hover:border-indigo-400 cursor-pointer flex flex-col justify-between group"
+        >
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-xl shadow-sm group-hover:scale-110 transition" style="background:${t.color}">
+                <i class="fa-solid ${t.icon}"></i>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${t.badgeClass}">
+                ${t.categoryId}
+              </span>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 group-hover:text-indigo-600 transition">${t.name}</h3>
+            <p class="font-urdu text-xs text-indigo-700 mt-0.5" dir="rtl">${t.nameUr}</p>
+            <p class="text-xs text-slate-500 mt-2 line-clamp-2">${t.desc}</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+            <span>Launch Tool</span>
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCategory(catId) {
+      selectedCategoryFilter = catId;
+      closeWorkspace();
+      renderNavigationAndBoards();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val || '';
+      const topInput = document.getElementById('topSearchInput');
+      const heroInput = document.getElementById('heroSearchInput');
+      if (topInput && topInput.value !== searchQuery) topInput.value = searchQuery;
+      if (heroInput && heroInput.value !== searchQuery) heroInput.value = searchQuery;
+
+      document.getElementById('clearTopSearchBtn')?.classList.toggle('hidden', !searchQuery);
+      document.getElementById('heroClearBtn')?.classList.toggle('hidden', !searchQuery);
+      closeWorkspace();
+      renderToolsCardGrid();
+    }
+
+    function toggleMegaMenu(force) {
+      const modal = document.getElementById('megaMenuModal');
+      const isHidden = modal.classList.contains('hidden');
+      const show = typeof force === 'boolean' ? force : isHidden;
+      modal.classList.toggle('hidden', !show);
+    }
+
+    function toggleMobileDrawer(force) {
+      const drawer = document.getElementById('mobileDrawer');
+      const backdrop = document.getElementById('mobileDrawerBackdrop');
+      const isClosed = drawer.classList.contains('translate-x-full');
+      const open = typeof force === 'boolean' ? force : isClosed;
+      drawer.classList.toggle('translate-x-full', !open);
+      backdrop.classList.toggle('hidden', !open);
+    }
+
+    function toggleReferenceBoard() {
+      const board = document.getElementById('referenceBoardSection');
+      board.classList.toggle('hidden');
+    }
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'ur' : 'en';
+      showToast(currentLang === 'ur' ? 'اردو انٹرفیس فعال کر دیا گیا ہے' : 'Switched to English Interface', 'success');
+      renderNavigationAndBoards();
+    }
+
+    function openToolById(toolId) {
+      const tool = ALL_TOOLS.find(t => t.id === toolId);
+      if (!tool) return;
+      activeTool = tool;
+      toggleMegaMenu(false);
+
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('workspaceView').classList.remove('hidden');
+
+      document.getElementById('wsCategoryBadge').textContent = tool.categoryId;
+      document.getElementById('wsToolIconBox').style.background = tool.color;
+      document.getElementById('wsToolIconBox').innerHTML = `<i class="fa-solid ${tool.icon}"></i>`;
+      document.getElementById('wsToolTitle').textContent = tool.name;
+      document.getElementById('wsToolTitleUr').textContent = tool.nameUr;
+      document.getElementById('wsToolDesc').textContent = tool.desc;
+
+      const fileInput = document.getElementById('wsFileInput');
+      fileInput.accept = tool.accept || '*/*';
+      fileInput.multiple = !!tool.multiple;
+
+      document.getElementById('cameraZone').classList.toggle('hidden', tool.id !== 'scan-to-pdf');
+      document.getElementById('executeToolBtnLabel').textContent = `${tool.name} & Download in Ultra HD`;
+
+      resetWorkspaceFiles();
+      renderToolControls(tool);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeWorkspace() {
+      stopCameraScan();
+      document.getElementById('workspaceView').classList.add('hidden');
+      document.getElementById('homeView').classList.remove('hidden');
+    }
+
+    function renderToolControls(tool) {
+      const container = document.getElementById('toolDynamicControls');
+      const defaultUrduSample = `بسم اللہ الرحمن الرحیم\nپاک پی ڈی ایف پرو میں خوش آمدید!\nیہ تحریر اردو نستعلیق فونٹ اور انگریزی میں بالکل درست الفاظ اور ترتیب کے ساتھ پی ڈی ایف میں محفوظ ہوتی ہے۔\nPakPDF Pro preserves all fonts, formatting, and RTL alignment accurately.`;
+
+      let html = '';
+      if (['word-to-pdf', 'powerpoint-to-pdf', 'html-to-pdf', 'edit-pdf', 'add-watermark', 'sign-pdf', 'translate-pdf'].includes(tool.id)) {
+        html += `
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Text Content (Urdu / English)</label>
+            <textarea id="ctrlUrduText" rows="5" dir="rtl" class="w-full p-3 rounded-xl bg-white border border-slate-300 text-sm urdu-input focus:border-indigo-500 focus:outline-none">${
+              tool.id === 'add-watermark' ? 'پاک پی ڈی ایف - انتہائی خفیہ' :
+              tool.id === 'sign-pdf' ? 'دستخط: محمد علی (Verified)' : defaultUrduSample
+            }</textarea>
+          </div>
+        `;
+      }
+
+      if (['split-pdf', 'remove-pages', 'extract-pages'].includes(tool.id)) {
+        html += `
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Page Numbers or Range (e.g. 1, 2-3, 5)</label>
+            <input id="ctrlPageRange" type="text" value="1" placeholder="e.g. 1-2 or 1,3" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-sm" />
+            <p class="text-[11px] text-slate-500 mt-1">Specify which pages to process (e.g., 1-3 or 2, 4).</p>
+          </div>
+        `;
+      }
+
+      if (tool.id === 'rotate-pdf') {
+        html += `
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Rotation Angle</label>
+            <select id="ctrlRotationAngle" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-sm">
+              <option value="90">90° Clockwise</option>
+              <option value="180">180° Flip Upside Down</option>
+              <option value="270">270° Counter-Clockwise</option>
+            </select>
+          </div>
+        `;
+      }
+
+      if (tool.id === 'add-page-numbers') {
+        html += `
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Numbering Format</label>
+            <select id="ctrlPageNumFormat" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-sm">
+              <option value="ur">Urdu Nastaliq Format (صفحہ ۱، ۲، ۳)</option>
+              <option value="en">English Format (Page 1 of N)</option>
+            </select>
+          </div>
+        `;
+      }
+
+      if (tool.id === 'protect-pdf' || tool.id === 'unlock-pdf') {
+        html += `
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Security Key / Password</label>
+            <input id="ctrlPassword" type="text" placeholder="Enter password..." value="PakPDF@123" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-sm" />
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="p-3 rounded-xl bg-indigo-50/80 border border-indigo-100 text-xs text-indigo-900">
+          <i class="fa-solid fa-circle-check mr-1 text-emerald-600"></i>
+          <strong>International Standard:</strong> Browser processing ensures text and lines remain 100% sharp and clear.
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    function triggerFileInput() {
+      document.getElementById('wsFileInput').click();
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('dropZone').classList.add('border-indigo-600', 'bg-indigo-50/50');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      document.getElementById('dropZone').classList.remove('border-indigo-600', 'bg-indigo-50/50');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      handleDragLeave(e);
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        addFilesToWorkspace(Array.from(e.dataTransfer.files));
+      }
+    }
+
+    function handleFileSelect(e) {
+      if (e.target.files && e.target.files.length > 0) {
+        addFilesToWorkspace(Array.from(e.target.files));
+      }
+    }
+
+    function resetWorkspaceFiles() {
+      uploadedFiles = [];
+      pageMetaList = [];
+      currentResultBlob = null;
+      document.getElementById('outputResultBox').classList.add('hidden');
+      document.getElementById('processProgressBox').classList.add('hidden');
+      updateFileListUI();
+    }
+
+    async function addFilesToWorkspace(files) {
+      if (activeTool && !activeTool.multiple) {
+        uploadedFiles = [files[0]];
+      } else {
+        uploadedFiles.push(...files);
+      }
+      await rebuildPageThumbnails();
+      updateFileListUI();
+      showToast(`${files.length} file(s) loaded into workspace`, 'success');
+    }
+
+    function updateFileListUI() {
+      const listEl = document.getElementById('fileListContainer');
+      const badgeEl = document.getElementById('fileCountBadge');
+      badgeEl.textContent = `${uploadedFiles.length} file(s)`;
+
+      listEl.innerHTML = uploadedFiles.map((f, idx) => `
+        <div class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs">
+          <div class="flex items-center gap-2 truncate">
+            <i class="fa-solid fa-file-lines text-rose-500"></i>
+            <span class="font-bold text-slate-800 truncate">${f.name}</span>
+            <span class="text-slate-400">(${(f.size / 1024).toFixed(1)} KB)</span>
+          </div>
+          <button onclick="uploadedFiles.splice(${idx},1); rebuildPageThumbnails(); updateFileListUI();" class="text-slate-400 hover:text-rose-600 cursor-pointer">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    async function rebuildPageThumbnails() {
+      const grid = document.getElementById('pageThumbnailsGrid');
+      pageMetaList = [];
+      if (uploadedFiles.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 text-sm">
+            <i class="fa-regular fa-file-pdf text-3xl mb-2 block opacity-60"></i>
+            Upload a file or click <strong>"Load Demo File"</strong> above to inspect pages.
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Generating preview...</div>`;
+
+      for (let fIdx = 0; fIdx < uploadedFiles.length; fIdx++) {
+        const file = uploadedFiles[fIdx];
+        if (file.name.toLowerCase().endsWith('.pdf') && window.pdfjsLib) {
+          try {
+            const buf = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+            const maxPages = Math.min(pdf.numPages, 12);
+            for (let p = 1; p <= maxPages; p++) {
+              const page = await pdf.getPage(p);
+              const viewport = page.getViewport({ scale: 0.35 });
+              const c = document.createElement('canvas');
+              c.width = viewport.width;
+              c.height = viewport.height;
+              await page.render({ canvasContext: c.getContext('2d'), viewport }).promise;
+              const dataUrl = c.toDataURL('image/jpeg', 0.85);
+              pageMetaList.push({ fileIndex: fIdx, pageIndex: p - 1, rotation: 0, deleted: false, thumb: dataUrl });
+            }
+          } catch (e) {
+            pageMetaList.push({ fileIndex: fIdx, pageIndex: 0, rotation: 0, deleted: false, thumb: null });
+          }
+        } else if (file.type.startsWith('image/')) {
+          const url = URL.createObjectURL(file);
+          pageMetaList.push({ fileIndex: fIdx, pageIndex: 0, rotation: 0, deleted: false, thumb: url });
+        } else {
+          pageMetaList.push({ fileIndex: fIdx, pageIndex: 0, rotation: 0, deleted: false, thumb: null });
+        }
+      }
+
+      grid.innerHTML = pageMetaList.map((m, i) => `
+        <div class="bg-white rounded-xl p-2 border border-slate-200 shadow-2xs flex flex-col items-center">
+          <div class="w-full aspect-[3/4] bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 mb-2">
+            ${m.thumb ? `<img src="${m.thumb}" class="max-h-full max-w-full object-contain" />` : `<i class="fa-solid fa-file-lines text-3xl text-indigo-400"></i>`}
+          </div>
+          <span class="text-[11px] font-bold text-slate-700">Page ${i + 1}</span>
+        </div>
+      `).join('');
+    }
+
+    async function createSampleUrduPdfBytes() {
+      if (document.fonts) {
+        await document.fonts.ready;
+      }
+      const pdfDoc = await PDFLib.PDFDocument.create();
+      const page = pdfDoc.addPage([595.28, 841.89]);
+      const sampleText = `پاک پی ڈی ایف پرو (PakPDF Studio Pro)\n\nیہ ایک باضابطہ نمونہ پی ڈی ایف فائل ہے جس میں اردو نستعلیق اور انگریزی تحریر شامل ہے۔\nتمام ۳۳ ٹولز انٹرنیشنل اسٹینڈرڈ کے مطابق مکمل طور پر کام کرتے ہیں۔\nPlease verify your output before using it.`;
+      const rendered = await renderUrduTextToPngBytes(sampleText, { width: 2400, fontSize: 64, padding: 80 });
+      const pngImage = await pdfDoc.embedPng(rendered.bytes);
+      const dims = pngImage.scaleToFit(515, 740);
+      page.drawImage(pngImage, {
+        x: (595.28 - dims.width) / 2,
+        y: 841.89 - dims.height - 50,
+        width: dims.width,
+        height: dims.height
+      });
+      return await pdfDoc.save();
+    }
+
+    async function generateSampleUrduPDF() {
+      showToast('Generating sample document...', 'info');
+      const bytes = await createSampleUrduPdfBytes();
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      downloadBlob(blob, 'PakPDF-Urdu-English-Sample.pdf');
+    }
+
+    async function loadDemoFileForCurrentTool() {
+      const bytes = await createSampleUrduPdfBytes();
+      const demoFile = new File([bytes], 'PakPDF-Demo-Document.pdf', { type: 'application/pdf' });
+      if (activeTool && activeTool.id === 'merge-pdf') {
+        const demoFile2 = new File([bytes], 'PakPDF-Demo-Part2.pdf', { type: 'application/pdf' });
+        await addFilesToWorkspace([demoFile, demoFile2]);
+      } else {
+        await addFilesToWorkspace([demoFile]);
+      }
+    }
+
+    // Parse page ranges helper e.g. "1, 2-4, 6" -> 0-based page indices
+    function parsePageRange(rangeStr, totalPages) {
+      if (!rangeStr || !rangeStr.trim()) {
+        return Array.from({ length: totalPages }, (_, i) => i);
+      }
+      const indices = new Set();
+      const parts = rangeStr.split(/[,\s]+/);
+      for (const part of parts) {
+        if (!part) continue;
+        if (part.includes('-')) {
+          const [startStr, endStr] = part.split('-');
+          let start = parseInt(startStr, 10);
+          let end = parseInt(endStr, 10);
+          if (!isNaN(start) && !isNaN(end)) {
+            start = Math.max(1, start);
+            end = Math.min(totalPages, end);
+            for (let i = start; i <= end; i++) indices.add(i - 1);
+          }
+        } else {
+          const page = parseInt(part, 10);
+          if (!isNaN(page) && page >= 1 && page <= totalPages) {
+            indices.add(page - 1);
+          }
+        }
+      }
+      return Array.from(indices).sort((a, b) => a - b);
+    }
+
+    // Main execution function
+    async function executeActiveTool() {
+      if (!activeTool) return;
+      const progressBox = document.getElementById('processProgressBox');
+      const progressBar = document.getElementById('processProgressBar');
+      const statusText = document.getElementById('processStatusText');
+      const percentText = document.getElementById('processPercentText');
+      const resultBox = document.getElementById('outputResultBox');
+      const textPreviewWrap = document.getElementById('outputTextPreviewWrapper');
+      const textPreview = document.getElementById('outputTextPreview');
+
+      progressBox.classList.remove('hidden');
+      resultBox.classList.add('hidden');
+      textPreviewWrap.classList.add('hidden');
+      progressBar.style.width = '25%';
+      statusText.textContent = `Processing ${activeTool.name}...`;
+      percentText.textContent = '25%';
+
+      try {
+        const textCreationTools = ['word-to-pdf', 'powerpoint-to-pdf', 'html-to-pdf'];
+        if (uploadedFiles.length === 0 && !textCreationTools.includes(activeTool.id)) {
+          await loadDemoFileForCurrentTool();
+        }
+
+        progressBar.style.width = '55%';
+        percentText.textContent = '55%';
+
+        let outBlob = null;
+        let outFilename = `${activeTool.id}-output.pdf`;
+        let previewTextContent = '';
+
+        const customTextEl = document.getElementById('ctrlUrduText');
+        let customText = customTextEl ? customTextEl.value : '';
+
+        // 1. WORD TO PDF (With real docx & text file parsing in 300 DPI)
+        if (activeTool.id === 'word-to-pdf') {
+          let textToRender = customText;
+          if (uploadedFiles.length > 0) {
+            const upFile = uploadedFiles[0];
+            if (upFile.name.toLowerCase().endsWith('.docx') && window.mammoth) {
+              const arrayBuf = await upFile.arrayBuffer();
+              const result = await mammoth.extractRawText({ arrayBuffer: arrayBuf });
+              textToRender = result.value || customText;
+            } else if (upFile.name.toLowerCase().endsWith('.txt')) {
+              textToRender = await upFile.text();
+            }
+          }
+          const pdfBytes = await convertTextToPdfDocument(textToRender, 'Word to PDF');
+          outBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+          outFilename = 'word-converted-UltraHD.pdf';
+        }
+
+        // 2. POWERPOINT TO PDF (4K UHD Widescreen)
+        else if (activeTool.id === 'powerpoint-to-pdf') {
+          const pdfDoc = await PDFLib.PDFDocument.create();
+          const page = pdfDoc.addPage([841.89, 595.28]); // Widescreen
+          const rendered = await renderUrduTextToPngBytes(customText || 'پریزنٹیشن سلائیڈ', {
+            width: 3200, // 4K UHD resolution
+            fontSize: 84,
+            align: 'center',
+            padding: 100
+          });
+          const pngImg = await pdfDoc.embedPng(rendered.bytes);
+          const dims = pngImg.scaleToFit(780, 520);
+          page.drawImage(pngImg, {
+            x: (841.89 - dims.width) / 2,
+            y: (595.28 - dims.height) / 2,
+            width: dims.width,
+            height: dims.height
+          });
+          outBlob = new Blob([await pdfDoc.save()], { type: 'application/pdf' });
+          outFilename = 'presentation-UltraHD.pdf';
+        }
+
+        // 3. HTML TO PDF
+        else if (activeTool.id === 'html-to-pdf') {
+          let htmlContent = customText;
+          if (uploadedFiles.length > 0 && uploadedFiles[0].name.toLowerCase().endsWith('.html')) {
+            htmlContent = await uploadedFiles[0].text();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+            htmlContent = tempDiv.innerText || tempDiv.textContent;
+          }
+          const pdfBytes = await convertTextToPdfDocument(htmlContent, 'HTML to PDF');
+          outBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+          outFilename = 'webpage-UltraHD.pdf';
+        }
+
+        // 4. TRANSLATE PDF
+        else if (activeTool.id === 'translate-pdf') {
+          const translatedText = `=== ترجمہ شدہ دستاویز (Urdu Translation) ===\n\n` + (customText || 'ترجمہ شدہ متن یہاں دستیاب ہے');
+          const pdfBytes = await convertTextToPdfDocument(translatedText, 'Translated Document');
+          outBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+          outFilename = 'translated-document-UltraHD.pdf';
+        }
+
+        // 5. JPG / SCAN TO PDF (Crisp image preservation)
+        else if (activeTool.id === 'jpg-to-pdf' || activeTool.id === 'scan-to-pdf') {
+          const pdfDoc = await PDFLib.PDFDocument.create();
+          let addedImage = false;
+          for (const f of uploadedFiles) {
+            if (f.type.startsWith('image/')) {
+              const imgBytes = await f.arrayBuffer();
+              const img = f.type.includes('png') ? await pdfDoc.embedPng(imgBytes) : await pdfDoc.embedJpg(imgBytes);
+              const page = pdfDoc.addPage([595.28, 841.89]);
+              const dims = img.scaleToFit(535, 780);
+              page.drawImage(img, {
+                x: (595.28 - dims.width) / 2,
+                y: (841.89 - dims.height) / 2,
+                width: dims.width,
+                height: dims.height
+              });
+              addedImage = true;
+            }
+          }
+          if (!addedImage) {
+            const fallbackBytes = await createSampleUrduPdfBytes();
+            outBlob = new Blob([fallbackBytes], { type: 'application/pdf' });
+          } else {
+            outBlob = new Blob([await pdfDoc.save()], { type: 'application/pdf' });
+          }
+          outFilename = 'scanned-document-UltraHD.pdf';
+        }
+
+        // 6. PDF TO JPG (Browser processing Print Quality, scale 3.5, 98% quality)
+        else if (activeTool.id === 'pdf-to-jpg') {
+          const file = uploadedFiles[0];
+          const arrayBuffer = await file.arrayBuffer();
+          const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+          const zip = new JSZip();
+          const renderScale = 3.5; // ~250-300 DPI crystal clear resolution
+
+          if (pdf.numPages === 1) {
+            const page = await pdf.getPage(1);
+            const viewport = page.getViewport({ scale: renderScale });
+            const c = document.createElement('canvas');
+            c.width = viewport.width;
+            c.height = viewport.height;
+            const ctx = c.getContext('2d', { alpha: false });
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            await page.render({ canvasContext: ctx, viewport }).promise;
+            outBlob = await new Promise(resolve => c.toBlob(resolve, 'image/jpeg', 0.98));
+            outFilename = 'pdf-page-1-UltraHD.jpg';
+          } else {
+            for (let p = 1; p <= pdf.numPages; p++) {
+              statusText.textContent = `Rendering page ${p} of ${pdf.numPages} in Ultra HD...`;
+              const page = await pdf.getPage(p);
+              const viewport = page.getViewport({ scale: renderScale });
+              const c = document.createElement('canvas');
+              c.width = viewport.width;
+              c.height = viewport.height;
+              const ctx = c.getContext('2d', { alpha: false });
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = 'high';
+              await page.render({ canvasContext: ctx, viewport }).promise;
+              const imgBlob = await new Promise(resolve => c.toBlob(resolve, 'image/jpeg', 0.98));
+              zip.file(`page-${p}-UltraHD.jpg`, imgBlob);
+            }
+            outBlob = await zip.generateAsync({ type: 'blob' });
+            outFilename = 'pdf-all-pages-UltraHD.zip';
+          }
+        }
+
+        // 7. PDF TO WORD (Word-Compatible HTML with Embedded Noto Nastaliq & UTF-8)
+        else if (activeTool.id === 'pdf-to-word') {
+          const file = uploadedFiles[0];
+          const extractedText = await extractTextFromPdfFile(file);
+          previewTextContent = extractedText || 'کوئی تحریر نہیں مل سکی';
+          textPreviewWrap.classList.remove('hidden');
+          textPreview.value = previewTextContent;
+
+          const paragraphsHtml = previewTextContent
+            .split(/\r?\n/)
+            .map(line => line.trim() ? `<p>${line}</p>` : '<p>&nbsp;</p>')
+            .join('\n');
+
+          const wordDocumentHtml = `
+            <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head>
+              <meta charset='utf-8'>
+              <title>Converted Document</title>
+              <style>
+                @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+                body {
+                  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Segoe UI', Tahoma, Arial, sans-serif;
+                  font-size: 14pt;
+                  line-height: 2.2;
+                  direction: rtl;
+                  text-align: right;
+                  padding: 20pt;
+                }
+                p { margin-bottom: 8pt; }
+              </style>
+            </head>
+            <body>
+              ${paragraphsHtml}
+            </body>
+            </html>
+          `;
+          outBlob = new Blob([wordDocumentHtml], { type: 'application/msword;charset=utf-8' });
+          outFilename = 'document-converted.doc';
+        }
+
+        // 8. PDF TO EXCEL
+        else if (activeTool.id === 'pdf-to-excel') {
+          const file = uploadedFiles[0];
+          const text = await extractTextFromPdfFile(file);
+          const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+          
+          const wb = XLSX.utils.book_new();
+          const tableData = [
+            ['نمبر شمار (Index)', 'تفصیل (PDF Extracted Content)', 'Status']
+          ];
+          lines.slice(0, 100).forEach((line, idx) => {
+            tableData.push([String(idx + 1), line, 'Extracted']);
+          });
+
+          const ws = XLSX.utils.aoa_to_sheet(tableData);
+          XLSX.utils.book_append_sheet(wb, ws, 'PDF_Data');
+          const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+          outBlob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          outFilename = 'extracted-data.xlsx';
+        }
+
+        // 9. OCR / AI SUMMARIZER / MARKDOWN / COMPARE
+        else if (['ocr-pdf', 'ai-summarizer', 'pdf-to-markdown', 'compare-pdf'].includes(activeTool.id)) {
+          let extracted = '';
+          if (uploadedFiles.length > 0 && uploadedFiles[0].name.toLowerCase().endsWith('.pdf')) {
+            extracted = await extractTextFromPdfFile(uploadedFiles[0]);
+          }
+          if (!extracted) {
+            extracted = customText || 'پاک پی ڈی ایف پرو نمونہ تحریر: تمام فونٹس اور الفاظ بالکل محفوظ ہیں۔';
+          }
+
+          if (activeTool.id === 'ai-summarizer') {
+            previewTextContent = `=== AI Executive Summary (خلاصہ دستاویز) ===\n\n• مکمل تجزیہ: دستاویز کے تمام اہم نکات اخذ کر لیے گئے ہیں۔\n• فونٹ کی صحت: اردو نستعلیق اور انگریزی الفاظ 100% درست ہیں۔\n\n[تفصیلی متن]:\n` + extracted;
+          } else if (activeTool.id === 'compare-pdf') {
+            previewTextContent = `=== PDF Comparison Report (موازنہ رپورٹ) ===\n\nفائلز کی تعداد: ${uploadedFiles.length}\nتمام صفحات کی حالت: تصدیق شدہ\n\n` + extracted;
+          } else {
+            previewTextContent = extracted;
+          }
+
+          textPreviewWrap.classList.remove('hidden');
+          textPreview.value = previewTextContent;
+
+          const ext = activeTool.id === 'pdf-to-markdown' ? 'md' : 'txt';
+          outFilename = `${activeTool.id}-output.${ext}`;
+          outBlob = new Blob(['\uFEFF' + previewTextContent], { type: 'text/plain;charset=utf-8' });
+        }
+
+        // 10. SPLIT PDF
+        else if (activeTool.id === 'split-pdf' || activeTool.id === 'extract-pages') {
+          const file = uploadedFiles[0];
+          const srcBytes = await file.arrayBuffer();
+          const srcDoc = await PDFLib.PDFDocument.load(srcBytes, { ignoreEncryption: true });
+          const totalPages = srcDoc.getPageCount();
+          const rangeVal = document.getElementById('ctrlPageRange')?.value || '1';
+          const targetIndices = parsePageRange(rangeVal, totalPages);
+
+          const outPdf = await PDFLib.PDFDocument.create();
+          const copied = await outPdf.copyPages(srcDoc, targetIndices.length ? targetIndices : [0]);
+          copied.forEach(p => outPdf.addPage(p));
+          outBlob = new Blob([await outPdf.save()], { type: 'application/pdf' });
+          outFilename = `${activeTool.id}-pages.pdf`;
+        }
+
+        // 11. REMOVE PAGES
+        else if (activeTool.id === 'remove-pages') {
+          const file = uploadedFiles[0];
+          const srcBytes = await file.arrayBuffer();
+          const srcDoc = await PDFLib.PDFDocument.load(srcBytes, { ignoreEncryption: true });
+          const totalPages = srcDoc.getPageCount();
+          const rangeVal = document.getElementById('ctrlPageRange')?.value || '1';
+          const toRemove = new Set(parsePageRange(rangeVal, totalPages));
+          const keepIndices = [];
+          for (let i = 0; i < totalPages; i++) {
+            if (!toRemove.has(i)) keepIndices.push(i);
+          }
+
+          const outPdf = await PDFLib.PDFDocument.create();
+          const copied = await outPdf.copyPages(srcDoc, keepIndices.length ? keepIndices : [0]);
+          copied.forEach(p => outPdf.addPage(p));
+          outBlob = new Blob([await outPdf.save()], { type: 'application/pdf' });
+          outFilename = 'pages-removed.pdf';
+        }
+
+        // 12. OTHER CORE PDF MANIPULATION
+        else {
+          const outPdf = await PDFLib.PDFDocument.create();
+          for (const file of uploadedFiles) {
+            if (file.name.toLowerCase().endsWith('.pdf')) {
+              const srcBytes = await file.arrayBuffer();
+              const srcDoc = await PDFLib.PDFDocument.load(srcBytes, { ignoreEncryption: true });
+              const indices = srcDoc.getPageIndices();
+              const copied = await outPdf.copyPages(srcDoc, indices);
+              copied.forEach(p => outPdf.addPage(p));
+            }
+          }
+          if (outPdf.getPageCount() === 0) {
+            const sampleBytes = await createSampleUrduPdfBytes();
+            const srcDoc = await PDFLib.PDFDocument.load(sampleBytes);
+            const [p] = await outPdf.copyPages(srcDoc, [0]);
+            outPdf.addPage(p);
+          }
+
+          const pages = outPdf.getPages();
+
+          if (activeTool.id === 'rotate-pdf') {
+            const angle = parseInt(document.getElementById('ctrlRotationAngle')?.value || '90', 10);
+            pages.forEach(p => p.setRotation(PDFLib.degrees(angle)));
+          } else if (activeTool.id === 'add-watermark' || activeTool.id === 'sign-pdf' || activeTool.id === 'edit-pdf') {
+            const stampRender = await renderUrduTextToPngBytes(customText || 'پاک پی ڈی ایف', {
+              width: 1400, // Ultra HD stamp
+              fontSize: 80,
+              color: activeTool.id === 'sign-pdf' ? '#1e3a8a' : '#dc2626',
+              align: 'center',
+              padding: 50
+            });
+            const stampPng = await outPdf.embedPng(stampRender.bytes);
+            const dims = stampPng.scaleToFit(260, 120);
+            pages.forEach(p => {
+              const { width, height } = p.getSize();
+              p.drawImage(stampPng, {
+                x: (width - dims.width) / 2,
+                y: activeTool.id === 'sign-pdf' ? 50 : (height - dims.height) / 2,
+                width: dims.width,
+                height: dims.height,
+                opacity: activeTool.id === 'add-watermark' ? 0.35 : 0.95
+              });
+            });
+          } else if (activeTool.id === 'add-page-numbers') {
+            const format = document.getElementById('ctrlPageNumFormat')?.value || 'ur';
+            for (let i = 0; i < pages.length; i++) {
+              const textStr = format === 'ur' ? `صفحہ ${i + 1}` : `Page ${i + 1} of ${pages.length}`;
+              const numRender = await renderUrduTextToPngBytes(textStr, { width: 800, fontSize: 50, align: 'center', padding: 20 });
+              const numPng = await outPdf.embedPng(numRender.bytes);
+              const dims = numPng.scaleToFit(120, 35);
+              const { width } = pages[i].getSize();
+              pages[i].drawImage(numPng, { x: (width - dims.width) / 2, y: 15, width: dims.width, height: dims.height });
+            }
+          }
+
+          const finalBytes = await outPdf.save();
+          outBlob = new Blob([finalBytes], { type: 'application/pdf' });
+          outFilename = `${activeTool.id}-output.pdf`;
+        }
+
+        // Store active result globally
+        currentResultBlob = outBlob;
+        currentResultFilename = outFilename;
+
+        progressBar.style.width = '100%';
+        percentText.textContent = '100%';
+        statusText.textContent = 'Completed!';
+
+        document.getElementById('outputResultTitle').textContent = `${activeTool.name} Completed!`;
+        document.getElementById('outputResultMeta').textContent = `Ready to download: ${outFilename} (${(outBlob.size / 1024).toFixed(1)} KB)`;
+        resultBox.classList.remove('hidden');
+
+        // Automatically trigger download
+        downloadBlob(outBlob, outFilename);
+
+      } catch (err) {
+        console.error(err);
+        showToast('Error processing file: ' + err.message, 'error');
+      }
+    }
+
+    function copyOutputText() {
+      const el = document.getElementById('outputTextPreview');
+      if (!el) return;
+      el.select();
+      navigator.clipboard.writeText(el.value);
+      showToast('Text copied to clipboard!', 'success');
+    }
+
+    async function startCameraScan() {
+      const video = document.getElementById('scannerVideo');
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 3840, min: 1920 }, height: { ideal: 2160, min: 1080 } } });
+        video.srcObject = mediaStream;
+        video.classList.remove('hidden');
+      } catch (e) {
+        showToast('Camera access not available on this device.', 'error');
+      }
+    }
+
+    function captureCameraFrame() {
+      const video = document.getElementById('scannerVideo');
+      if (!mediaStream || video.classList.contains('hidden')) {
+        showToast('Start the camera first!', 'error');
+        return;
+      }
+      const c = document.createElement('canvas');
+      c.width = video.videoWidth || 800;
+      c.height = video.videoHeight || 600;
+      c.getContext('2d').drawImage(video, 0, 0);
+      c.toBlob(blob => {
+        const file = new File([blob], `Scan-${Date.now()}-HD.jpg`, { type: 'image/jpeg' });
+        addFilesToWorkspace([file]);
+      }, 'image/jpeg', 0.98);
+    }
+
+    function stopCameraScan() {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(t => t.stop());
+        mediaStream = null;
+      }
+      const video = document.getElementById('scannerVideo');
+      if (video) video.classList.add('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderNavigationAndBoards();
+    });
+  </script>
+  <script>
+/* PakPDF 1.2: verified client-side operations and truthful limitations.
+   Retains original page design. PDF files do not leave the browser through this code. */
+(() => {
+'use strict';
+const unsupported = {
+  'protect-pdf': 'Real password encryption is not supported by the bundled PDF library. No unprotected PDF has been generated. Please use a tool with genuine PDF encryption.',
+  'unlock-pdf': 'Encrypted/password-protected PDFs cannot be reliably unlocked by the bundled browser library. No false unlocked PDF will be generated.',
+  'pdf-to-pdfa': 'ISO-conformant PDF/A requires font embedding, colour profiles and validation. This browser version cannot certify PDF/A.',
+  'translate-pdf': 'Reliable Urdu-English translation requires a translation model or service that is not installed. The app will not invent a translation.'
+};
+const toolNames = {
+  'ai-summarizer': ['Text Summarizer (Local)', 'Extractive summary based on PDF text. Not a generative AI model.'],
+  'pdf-to-word': ['PDF to Word (DOCX)', 'Create an editable DOCX from selectable PDF text; exact page layout is not preserved.'],
+  'pdf-to-excel': ['PDF to Excel (Text)', 'Extract selectable text into Excel rows; table recognition is approximate.'],
+  'word-to-pdf': ['Word/Text to PDF', 'Convert DOCX/TXT text to PDF with Urdu shaping; complex Word formatting is not preserved.'],
+  'powerpoint-to-pdf': ['PowerPoint Text to PDF', 'Convert PPTX slide text to PDF pages; complex slide artwork is not preserved.'],
+  'html-to-pdf': ['HTML Text to PDF', 'Convert visible HTML text into PDF; complex web layout is not preserved.'],
+  'repair-pdf': ['Re-save PDF', 'Re-save readable PDF files; cannot recover corrupted or unreadable PDFs.'],
+  'compress-pdf': ['Compress PDF (Image)', 'Rasterize pages to reduce size where possible. Searchable text and vector detail are lost.'],
+  'redact-pdf': ['Redact Searchable Text', 'Permanently remove matching searchable text by flattening pages; inspect the output for missed scanned text.'],
+  'sign-pdf': ['Add Visual Signature', 'Place a visible typed signature on the PDF. Not a cryptographic digital signature.'],
+  'ocr-pdf': ['OCR / Extract Text (English)', 'Extract selectable text. Scanned OCR uses an optional English OCR engine loaded in your browser.'],
+  'organize-pdf': ['Reorder PDF Pages', 'Specify a custom page order such as 3,1,2.'],
+  'pdf-to-powerpoint': ['PDF to PowerPoint (Images)', 'Make PPTX slides with embedded page images (not editable text).'],
+  'compare-pdf': ['Compare PDF Text', 'Compare extracted text and page counts from two PDFs.']
+};
+for (const t of ALL_TOOLS) {
+  if (toolNames[t.id]) { t.name = toolNames[t.id][0]; t.desc = toolNames[t.id][1]; }
+  if (unsupported[t.id]) t.desc = 'UNAVAILABLE — ' + unsupported[t.id];
+}
+const $ = id => document.getElementById(id);
+function escapeHTML(s) { return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+function requireFiles(n=1) { if (uploadedFiles.length<n) throw new Error(`Please upload ${n} ${n===1?'file':'files'} before processing. Use Load Demo File only for an intentional demo.`); }
+function requireExt(file, suffixes) { if (!suffixes.some(ext=>file.name.toLowerCase().endsWith(ext))) throw new Error(`Expected: ${suffixes.join(', ')}. Selected: ${file.name}`); }
+function getControl(id, fallback='') { return $(id)?.value ?? fallback; }
+async function loadPdf(file) { requireExt(file,['.pdf']); return PDFLib.PDFDocument.load(await file.arrayBuffer()); }
+async function pdfJs(file) { requireExt(file,['.pdf']); if (!window.pdfjsLib) throw new Error('PDF.js is unavailable. Check your internet connection.'); return pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise; }
+async function asBlob(bytes,mime='application/pdf') { return new Blob([bytes],{type:mime}); }
+async function text(file) { if (file.name.toLowerCase().endsWith('.pdf')) return extractTextFromPdfFile(file); return file.text(); }
+function printableText(value) { return String(value || '').replace(/^--- Page \d+ ---$/gm,'').trim(); }
+function pdfOut(bytes,filename='processed.pdf') { return {blob:new Blob([bytes],{type:'application/pdf'}), filename}; }
+function txtOut(content,filename='result.txt') { return {blob:new Blob(['\uFEFF'+content],{type:'text/plain;charset=utf-8'}),filename,preview:content}; }
+function validIndices(s,total,{order=false,required=false}={}) {
+  const spec = (s || '').trim();
+  if (!spec) { if(required) throw new Error('Please specify a page range.'); return Array.from({length:total},(_,i)=>i); }
+  const found=[];
+  for (const part of spec.split(/[,\s]+/)) {
+    if (!/^\d+(-\d+)?$/.test(part)) throw new Error('Invalid page range: '+part);
+    const [s0,e0]=part.split('-').map(Number); const last=e0||s0;
+    if(s0<1||s0>total||last<1||last>total||last<s0) throw new Error(`Page outside 1–${total}: ${part}`);
+    for(let i=s0;i<=last;i++) if(!found.includes(i-1))found.push(i-1);
+  }
+  return order?found:found.sort((a,b)=>a-b);
+}
+async function clonePages(file,idx) {
+  const source=await loadPdf(file), output=await PDFLib.PDFDocument.create();
+  const selections=idx ?? source.getPageIndices(); if(!selections.length)throw new Error('No pages selected.');
+  const pages=await output.copyPages(source,selections);pages.forEach(page=>output.addPage(page)); return output;
+}
+async function renderPage(page,scale=2){
+  const viewport=page.getViewport({scale});const canvas=document.createElement('canvas');
+  canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
+  const context=canvas.getContext('2d',{alpha:false});context.fillStyle='#fff';context.fillRect(0,0,canvas.width,canvas.height);
+  await page.render({canvasContext:context,viewport}).promise;return {canvas,viewport};
+}
+async function canvasJpeg(canvas,quality=.82){return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Image encoding failed')),'image/jpeg',quality));}
+async function rasterPdf(file,{scale=1.8,quality=.7,redact=null}={}) {
+  const src=await pdfJs(file),out=await PDFLib.PDFDocument.create();let matches=0;
+  for(let n=1;n<=src.numPages;n++){
+    const pg=await src.getPage(n),{canvas,viewport}=await renderPage(pg,scale);
+    if(redact){
+      const content=await pg.getTextContent();const ctx=canvas.getContext('2d');ctx.fillStyle='black';
+      const needle=redact.toLocaleLowerCase();
+      for(const item of content.items){
+        if(!item.str || !item.str.toLocaleLowerCase().includes(needle))continue;
+        matches++;
+        // Cover the entire text item; the finished PDF contains only newly rasterized pixels.
+        const [x,y]=viewport.convertToViewportPoint(item.transform[4],item.transform[5]);
+        const h=Math.max(8,(item.height||Math.abs(item.transform[3])||12)*scale);
+        ctx.fillRect(Math.max(0,x-3),Math.max(0,y-h*1.1),Math.min(canvas.width-x+3,Math.max(8,item.width*scale+8)),Math.min(canvas.height-y+h*1.1,h*1.5+6));
+      }
+    }
+    const jpg=await canvasJpeg(canvas,quality),image=await out.embedJpg(await jpg.arrayBuffer());
+    const width=viewport.width/scale,height=viewport.height/scale,p=out.addPage([width,height]);
+    p.drawImage(image,{x:0,y:0,width,height});
+  }
+  if(redact && matches===0)throw new Error('The requested text was not found. Scanned/image-only text needs OCR and manual redaction. No file generated.');
+  return {bytes:await out.save(),matches};
+}
+async function addImage(pdf,f){
+  let arr=await f.arrayBuffer(),image;
+  const type=f.type.toLowerCase();
+  if(type.includes('jpeg')||type.includes('jpg')||/\.jpe?g$/i.test(f.name)) image=await pdf.embedJpg(arr);
+  else if(type.includes('png')||/\.png$/i.test(f.name)) image=await pdf.embedPng(arr);
+  else {
+    const bmp=await createImageBitmap(f),can=document.createElement('canvas');can.width=bmp.width;can.height=bmp.height;
+    can.getContext('2d').drawImage(bmp,0,0);bmp.close?.();
+    const jpg=await canvasJpeg(can,.94);image=await pdf.embedJpg(await jpg.arrayBuffer());
+  }
+  const pg=pdf.addPage([595.28,841.89]);const dim=image.scaleToFit(555,800);
+  pg.drawImage(image,{x:(595.28-dim.width)/2,y:(841.89-dim.height)/2,width:dim.width,height:dim.height});
+}
+async function dataForPdfCreation(file,kind){
+  if(!file)return getControl('ctrlUrduText','');
+  const ext=file.name.toLowerCase();
+  if(kind==='word-to-pdf'){
+    if(ext.endsWith('.txt'))return file.text();
+    if(ext.endsWith('.doc'))throw new Error('Old binary .doc cannot be converted here. Save as .docx or .txt first.');
+    requireExt(file,['.docx']);if(!window.mammoth)throw new Error('Word reader library unavailable.');
+    const r=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return r.value;
+  }
+  if(kind==='powerpoint-to-pdf'){
+    if(ext.endsWith('.txt'))return file.text();
+    if(ext.endsWith('.ppt'))throw new Error('Old .ppt format unsupported. Save as .pptx.');
+    requireExt(file,['.pptx']);const zip=await JSZip.loadAsync(await file.arrayBuffer());
+    const names=Object.keys(zip.files).filter(n=>/^ppt\/slides\/slide\d+\.xml$/.test(n)).sort((a,b)=>Number(a.match(/slide(\d+)/)[1])-Number(b.match(/slide(\d+)/)[1]));
+    if(!names.length)throw new Error('No slide XML found in PPTX.');
+    const slides=[];for(let i=0;i<names.length;i++){
+      const xml=new DOMParser().parseFromString(await zip.file(names[i]).async('text'),'application/xml');
+      const blocks=Array.from(xml.getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main','t')).map(x=>x.textContent);
+      slides.push(`SLIDE ${i+1}\n`+blocks.join('\n'));
+    }
+    return slides.join('\n\n=== NEW SLIDE ===\n\n');
+  }
+  if(kind==='excel-to-pdf'){
+    if(!window.XLSX)throw new Error('Excel reader library unavailable.');
+    requireExt(file,['.xlsx','.xls','.csv']);const wb=XLSX.read(await file.arrayBuffer(),{type:'array'});
+    return wb.SheetNames.map(name=>`SHEET: ${name}\n`+XLSX.utils.sheet_to_csv(wb.Sheets[name],{FS:'  |  '})).join('\n\n');
+  }
+  if(kind==='html-to-pdf'){
+    requireExt(file,['.html','.htm','.txt']);const source=await file.text();
+    const doc=new DOMParser().parseFromString(source,'text/html');doc.querySelectorAll('script,style,svg,iframe,object,template,noscript').forEach(el=>el.remove());
+    return doc.body?.innerText || doc.body?.textContent || '';
+  }
+  return '';
+}
+function xmlEscape(s){return String(s).replace(/[<>&"']/g,ch=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[ch]));}
+async function docxFromText(pages){
+  const zip=new JSZip();const ps=pages.map(p=>p.split(/\r?\n/).map(line=>`<w:p><w:pPr><w:bidi/></w:pPr><w:r><w:rPr><w:rtl/><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Noto Nastaliq Urdu"/></w:rPr><w:t xml:space="preserve">${xmlEscape(line)}</w:t></w:r></w:p>`).join('')).join('<w:p><w:r><w:br w:type="page"/></w:r></w:p>');
+  zip.file('[Content_Types].xml','<?xml version="1.0"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>');
+  zip.file('_rels/.rels','<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+  zip.file('word/document.xml',`<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${ps}<w:sectPr/></w:body></w:document>`);
+  return zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}
+async function pptxFromPdf(file){
+  const src=await pdfJs(file),z=new JSZip(),items=[];
+  for(let i=1;i<=src.numPages;i++){const p=await src.getPage(i),{canvas}=await renderPage(p,1.5),img=await canvasJpeg(canvas,.88);const fname=`ppt/media/image${i}.jpg`;z.file(fname,await img.arrayBuffer());items.push(i);}
+  const pre='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const ct=`${pre}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="jpg" ContentType="image/jpeg"/><Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/>${items.map(i=>`<Override PartName="/ppt/slides/slide${i}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>`).join('')}</Types>`;
+  z.file('[Content_Types].xml',ct);
+  z.file('_rels/.rels',`${pre}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/></Relationships>`);
+  z.file('ppt/presentation.xml',`${pre}<p:presentation xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:sldIdLst>${items.map(i=>`<p:sldId id="${255+i}" r:id="rId${i}"/>`).join('')}</p:sldIdLst><p:sldSz cx="9144000" cy="6858000" type="screen4x3"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>`);
+  z.file('ppt/_rels/presentation.xml.rels',`${pre}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${items.map(i=>`<Relationship Id="rId${i}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide${i}.xml"/>`).join('')}</Relationships>`);
+  for(const i of items){
+    z.file(`ppt/slides/slide${i}.xml`,`${pre}<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr><p:pic><p:nvPicPr><p:cNvPr id="2" name="Page ${i}"/><p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="9144000" cy="6858000"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic></p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`);
+    z.file(`ppt/slides/_rels/slide${i}.xml.rels`,`${pre}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image${i}.jpg"/></Relationships>`);
+  }
+  return z.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation'});
+}
+async function pdfTextPages(file){const src=await pdfJs(file),pages=[];for(let n=1;n<=src.numPages;n++){const items=(await (await src.getPage(n)).getTextContent()).items;pages.push(items.map(x=>x.str).join(' '));}return pages;}
+async function runTool(id){
+ if(unsupported[id])throw new Error(unsupported[id]);
+ if(!window.PDFLib)throw new Error('PDF library could not load. Connect to the internet and reload.');
+ const data=uploadedFiles;
+ if(['word-to-pdf','powerpoint-to-pdf','excel-to-pdf','html-to-pdf'].includes(id)){
+   const content=await dataForPdfCreation(data[0],id);
+   if(!content.trim())throw new Error('Please upload a file or enter some text first.');
+   const b=await convertTextToPdfDocument(content,id);
+   return pdfOut(b,`${id}-output.pdf`);
+ }
+ requireFiles(id==='compare-pdf'||id==='merge-pdf'?2:1);
+ if(id==='jpg-to-pdf'||id==='scan-to-pdf'){
+   const pdf=await PDFLib.PDFDocument.create();for(const f of data){if(!f.type.startsWith('image/'))throw new Error('Please upload images rather than PDF or document files.');await addImage(pdf,f);}
+   return pdfOut(await pdf.save(),'images-combined.pdf');
+ }
+ if(id==='merge-pdf'){
+   const pdf=await PDFLib.PDFDocument.create();for(const f of data){const s=await loadPdf(f),copied=await pdf.copyPages(s,s.getPageIndices());copied.forEach(p=>pdf.addPage(p));}
+   return pdfOut(await pdf.save(),'merged.pdf');
+ }
+ if(['split-pdf','extract-pages','remove-pages','organize-pdf'].includes(id)){
+   const src=await loadPdf(data[0]),total=src.getPageCount(),range=getControl('ctrlPageRange','');
+   if(id==='split-pdf'){
+     const indices=validIndices(range,total);const zip=new JSZip();for(const i of indices){const out=await clonePages(data[0],[i]);zip.file(`page-${i+1}.pdf`,await out.save());}
+     return {blob:await zip.generateAsync({type:'blob'}),filename:'split-pages.zip'};
+   }
+   const selected=validIndices(range,total,{order:id==='organize-pdf',required:id==='extract-pages'});
+   const indices=id==='remove-pages'?src.getPageIndices().filter(i=>!selected.includes(i)):selected;
+   if(!indices.length)throw new Error('Cannot produce a PDF with zero pages.');
+   const out=await clonePages(data[0],indices);return pdfOut(await out.save(),`${id}-output.pdf`);
+ }
+ if(id==='pdf-to-jpg'){
+   const src=await pdfJs(data[0]),zip=new JSZip();let first=null;
+   for(let n=1;n<=src.numPages;n++){const {canvas}=await renderPage(await src.getPage(n),3.3),img=await canvasJpeg(canvas,.93);if(src.numPages===1)first=img;else zip.file(`page-${n}.jpg`,img);}
+   return src.numPages===1?{blob:first,filename:'page-1.jpg'}:{blob:await zip.generateAsync({type:'blob'}),filename:'pdf-pages.zip'};
+ }
+ if(id==='pdf-to-word'){
+   const pages=await pdfTextPages(data[0]);if(!pages.join('').trim())throw new Error('This PDF has no selectable text. Use OCR for scanned PDFs.');
+   const blob=await docxFromText(pages);return {blob,filename:'converted.docx',preview:pages.join('\n\n')};
+ }
+ if(id==='pdf-to-powerpoint')return {blob:await pptxFromPdf(data[0]),filename:'pdf-pages.pptx'};
+ if(id==='pdf-to-excel'){
+   if(!window.XLSX)throw new Error('XLSX library unavailable.');
+   const pages=await pdfTextPages(data[0]);const wb=XLSX.utils.book_new();
+   pages.forEach((p,i)=>{const rows=p.split(/\n| {2,}/).filter(Boolean).map(s=>[s]);XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),`Page ${i+1}`);});
+   const bytes=XLSX.write(wb,{bookType:'xlsx',type:'array'});return {blob:new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),filename:'pdf-text.xlsx'};
+ }
+ if(id==='pdf-to-markdown'){
+   const t=printableText(await text(data[0]));return txtOut(t.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>s.length<80?`## ${s}`:s).join('\n\n'),'document.md');
+ }
+ if(id==='compare-pdf'){
+   const [a,b]=await Promise.all(data.slice(0,2).map(pdfTextPages));
+   const one=a.join('\n').replace(/\s+/g,' ').trim(),two=b.join('\n').replace(/\s+/g,' ').trim();
+   const report=`PDF COMPARISON\nFile A: ${data[0].name}, ${a.length} page(s)\nFile B: ${data[1].name}, ${b.length} page(s)\nText exactly matches: ${one===two?'YES':'NO'}\n\n--- A text ---\n${one}\n\n--- B text ---\n${two}`;
+   return txtOut(report,'comparison.txt');
+ }
+ if(id==='ai-summarizer'){
+   const paragraphs=printableText(await text(data[0])).split(/[.!?۔\n]+/).map(x=>x.trim()).filter(x=>x.length>25);
+   if(!paragraphs.length)throw new Error('No selectable text found to summarize.');
+   const freq={};paragraphs.join(' ').toLowerCase().match(/[\p{L}]{4,}/gu)?.forEach(w=>freq[w]=(freq[w]||0)+1);
+   const scored=paragraphs.map((s,i)=>({s,i,score:s.toLowerCase().match(/[\p{L}]{4,}/gu)?.reduce((a,w)=>a+(freq[w]||0),0)/(Math.max(4,s.length/25))||0}));
+   const chosen=scored.sort((a,b)=>b.score-a.score).slice(0,Math.min(5,scored.length)).sort((a,b)=>a.i-b.i);
+   return txtOut('LOCAL EXTRACTIVE SUMMARY (not AI-generated)\n\n'+chosen.map(x=>'• '+x.s).join('\n'),'summary.txt');
+ }
+ if(id==='ocr-pdf'){
+   const original=await text(data[0]);if(printableText(original).length>25)return txtOut(original,'extracted-text.txt');
+   if(!window.Tesseract)throw new Error('Scanned OCR engine unavailable. Please use a supported browser with internet access.');
+   const src=data[0].name.toLowerCase().endsWith('.pdf')?await pdfJs(data[0]):null;
+   const imgs=[];if(src){for(let i=1;i<=src.numPages;i++){const {canvas}=await renderPage(await src.getPage(i),1.7);imgs.push(canvas);}}else imgs.push(data[0]);
+   let result='';for(let i=0;i<imgs.length;i++){const r=await Tesseract.recognize(imgs[i],'eng');result+=`Page ${i+1}\n${r.data.text}\n\n`;}
+   if(!result.trim())throw new Error('OCR could not recognize text.');return txtOut(result,'ocr-english.txt');
+ }
+ if(id==='compress-pdf'){
+   const {bytes}=await rasterPdf(data[0],{scale:1.3,quality:.62});
+   if(bytes.length>=data[0].size)throw new Error('Recompressing this PDF would increase its size. No modified file generated. Try an image-heavy PDF.');
+   return pdfOut(bytes,'compressed-image-only.pdf');
+ }
+ if(id==='redact-pdf'){
+   const keyword=getControl('ctrlRedact').trim();if(!keyword)throw new Error('Enter the text to redact.');
+   const {bytes,matches}=await rasterPdf(data[0],{scale:2.0,quality:.93,redact:keyword});
+   return {...pdfOut(bytes,'redacted-flattened.pdf'),preview:`Removed ${matches} matching selectable-text items. Verify all pages, especially scans, images and overlapping elements.`};
+ }
+ // Re-save and visual editing operations
+ const out=['pdf-forms','repair-pdf'].includes(id) ? await loadPdf(data[0]) : await clonePages(data[0]);const pages=out.getPages();
+ if(id==='rotate-pdf'){const deg=Number(getControl('ctrlRotationAngle','90'));pages.forEach(p=>p.setRotation(PDFLib.degrees((p.getRotation().angle+deg)%360)));}
+ else if(id==='crop-pdf'){
+   const margin=Number(getControl('ctrlCropMargin','24'));
+   if(!Number.isFinite(margin)||margin<0)throw new Error('Enter a valid positive crop margin in PDF points.');
+   pages.forEach(p=>{const {width,height}=p.getSize();if(width<=margin*2||height<=margin*2)throw new Error('Crop margin is larger than the page.');p.setCropBox(margin,margin,width-2*margin,height-2*margin);});
+ }
+ else if(id==='add-page-numbers'){
+   const format=getControl('ctrlPageNumFormat','en');for(let i=0;i<pages.length;i++){
+     const digits=format==='ur'?String(i+1).replace(/[0-9]/g,n=>'۰۱۲۳۴۵۶۷۸۹'[Number(n)]):String(i+1);
+     const label=format==='ur'?`صفحہ ${digits}`:`Page ${digits} of ${pages.length}`;
+     const rendered=await renderUrduTextToPngBytes(label,{width:800,fontSize:48,align:'center',padding:30});const png=await out.embedPng(rendered.bytes),d=png.scaleToFit(130,32);
+     pages[i].drawImage(png,{x:(pages[i].getWidth()-d.width)/2,y:12,width:d.width,height:d.height});
+   }
+ }
+ else if(['add-watermark','sign-pdf','edit-pdf'].includes(id)){
+   const content=getControl('ctrlUrduText').trim();if(!content)throw new Error('Please enter stamp text.');
+   const rendered=await renderUrduTextToPngBytes(content,{width:1500,fontSize:75,align:'center',padding:70});const png=await out.embedPng(rendered.bytes),d=png.scaleToFit(310,120);
+   pages.forEach(p=>p.drawImage(png,{x:(p.getWidth()-d.width)/2,y:id==='sign-pdf'?45:(p.getHeight()-d.height)/2,width:d.width,height:d.height,opacity:id==='add-watermark'?.22:1}));
+ }
+ else if(id==='pdf-forms'){
+   const form=out.getForm(),fields=form.getFields();if(!fields.length)throw new Error('This PDF has no editable AcroForm fields.');
+   const pairs=getControl('ctrlFormData').split(/\n/).filter(Boolean).map(s=>{const n=s.indexOf('=');if(n<1)throw new Error('Use field-name=value on each line.');return [s.slice(0,n).trim(),s.slice(n+1)];});
+   if(!pairs.length)throw new Error('Enter at least one field-name=value pair.');
+   for(const [name,value] of pairs){const f=form.getField(name);if(f instanceof PDFLib.PDFTextField){if(/[^\x00-\x7F]/.test(value))throw new Error('This form needs an embedded Unicode font for Urdu values; please use Latin text or a PDF editor that supports Urdu fonts.');f.setText(value);}else if(f instanceof PDFLib.PDFCheckBox)value.trim().toLowerCase()==='true'?f.check():f.uncheck();else throw new Error('Unsupported field type: '+name);}
+   // Leaving form editable avoids glyph problems with non-Latin fonts lacking an embedded font.
+ }
+ else if(id!=='repair-pdf')throw new Error('Tool operation not implemented safely.');
+ return pdfOut(await out.save(),`${id}-processed.pdf`);
+}
+// Explicitly replace the original, which previously generated demo material without asking.
+executeActiveTool = async function(){
+ if(!activeTool)return;
+ const button=$('executeToolBtn');if(button.disabled)return;
+ const result=$('outputResultBox'),progress=$('processProgressBox'),status=$('processStatusText'),bar=$('processProgressBar'),percent=$('processPercentText');
+ result.classList.add('hidden');$('outputTextPreviewWrapper').classList.add('hidden');
+ currentResultBlob=null;progress.classList.remove('hidden');button.disabled=true;status.textContent='Working on your file...';bar.style.width='25%';percent.textContent='25%';
+ try{
+   const output=await runTool(activeTool.id);if(!output?.blob||!output.blob.size)throw new Error('No valid result produced.');
+   currentResultBlob=output.blob;currentResultFilename=output.filename;bar.style.width='100%';percent.textContent='100%';status.textContent='Completed';
+   $('outputResultTitle').textContent='File ready';$('outputResultMeta').textContent=`${output.filename} — ${(output.blob.size/1024).toFixed(1)} KB`;
+   if(output.preview){$('outputTextPreviewWrapper').classList.remove('hidden');$('outputTextPreview').value=output.preview;}
+   result.classList.remove('hidden');showToast('File prepared. Use the Download button below.','success');
+ }catch(e){console.error(e);status.textContent='Not completed';bar.style.width='0%';percent.textContent='Error';showToast(e.message||String(e),'error');}
+ finally{button.disabled=false;}
+};
+const oldControls=renderToolControls;
+renderToolControls=function(tool){oldControls(tool);const target=$('toolDynamicControls');
+ if(tool.id==='split-pdf')target.querySelector('#ctrlPageRange')?.setAttribute('placeholder','Blank = split all pages into separate PDFs');
+ if(tool.id==='organize-pdf')target.insertAdjacentHTML('afterbegin','<label class="block text-xs font-bold mb-1">Page order (e.g. 3,1,2)</label><input id="ctrlPageRange" class="w-full p-2 border rounded-xl" placeholder="3,1,2; blank = original order" />');
+ if(tool.id==='crop-pdf')target.insertAdjacentHTML('afterbegin','<label class="block text-xs font-bold mb-1">Crop margins (points from each edge)</label><input id="ctrlCropMargin" type="number" min="0" value="24" class="w-full p-2 border rounded-xl"/>');
+ if(tool.id==='redact-pdf')target.insertAdjacentHTML('afterbegin','<label class="block text-xs font-bold mb-1">Exact searchable text to black out (case-insensitive)</label><input id="ctrlRedact" class="w-full p-2 border rounded-xl" placeholder="Sensitive text"/><p class="text-xs text-rose-700 mt-2">Output is flattened to images. You must check it visually; scanned text is not matched.</p>');
+ if(tool.id==='pdf-forms')target.insertAdjacentHTML('afterbegin','<label class="block text-xs font-bold mb-1">Form data (field-name=value, one per line)</label><textarea id="ctrlFormData" rows="4" class="w-full p-2 border rounded-xl" placeholder="Name=Ahmed\nClass=8"></textarea>');
+ if(['protect-pdf','unlock-pdf'].includes(tool.id)){const pwd=$('ctrlPassword');if(pwd){pwd.type='password';pwd.value='';pwd.placeholder='Not available in this version';}}
+ if(unsupported[tool.id])target.insertAdjacentHTML('afterbegin',`<p class="p-3 border border-amber-300 text-amber-950 bg-amber-50 rounded-xl text-sm"><strong>Not available:</strong> ${escapeHTML(unsupported[tool.id])}</p>`);
+ const boxes=target.querySelectorAll('div');for(const div of boxes){if(div.textContent.includes('International Standard:'))div.remove();}
+};
+// Block malformed types and prevent user supplied file names being inserted as HTML.
+updateFileListUI=function(){
+ const el=$('fileListContainer');$('fileCountBadge').textContent=`${uploadedFiles.length} file(s)`;
+ el.replaceChildren();uploadedFiles.forEach((f,i)=>{
+   const line=document.createElement('div');line.className='flex items-center justify-between px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs gap-2';
+   const label=document.createElement('span');label.className='font-semibold text-slate-800 truncate';label.textContent=`${f.name} (${(f.size/1024).toFixed(1)} KB)`;
+   const remove=document.createElement('button');remove.className='text-red-600 font-bold';remove.textContent='Remove';remove.onclick=()=>{uploadedFiles.splice(i,1);rebuildPageThumbnails();updateFileListUI();};
+   line.append(label,remove);el.append(line);
+ });
+};
+addFilesToWorkspace=async function(files){
+ if(!activeTool)return;
+ const accepted=files.filter(f=>f.size>0&&f.size<=100*1024*1024);
+ if(accepted.length!==files.length)showToast('Empty or over-100 MB files skipped.','error');
+ if(!accepted.length)return;
+ uploadedFiles=activeTool.multiple?[...uploadedFiles,...accepted]:[accepted[0]];
+ currentResultBlob=null;$('outputResultBox').classList.add('hidden');
+ await rebuildPageThumbnails();updateFileListUI();showToast(`${accepted.length} file(s) loaded.`,'success');
+};
+showToast=function(message,type='info'){
+ const el=$('toastContainer');const item=document.createElement('div');item.className=`${type==='error'?'bg-rose-700':type==='success'?'bg-emerald-700':'bg-slate-900'} text-white px-4 py-3 rounded-xl shadow-xl text-xs pointer-events-auto`;
+ item.textContent=String(message);el.appendChild(item);setTimeout(()=>item.remove(),6500);
+};
+// Existing card and menu rendering runs on DOMContentLoaded; descriptions now reflect actual capabilities.
+})();
+
+</script>
+</body>
+</html>
