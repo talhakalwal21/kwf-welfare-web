@@ -8,6 +8,7 @@ on:
       - 'KWF_PC_Pages_Website.zip'
       - 'website-enhancements.js'
       - 'website-enhancements.css'
+      - 'pakpdf/**'
       - '.github/workflows/deploy-kwf-pages.yml'
 
 permissions:
@@ -33,6 +34,8 @@ jobs:
           mkdir -p _site
           unzip -q KWF_PC_Pages_Website.zip -d _site
           test -f _site/index.html
+          mkdir -p _site/pakpdf
+          cp pakpdf/index.html _site/pakpdf/index.html
           cat website-enhancements.js >> _site/app.js
           cat website-enhancements.css >> _site/style.css
           node --check _site/app.js
